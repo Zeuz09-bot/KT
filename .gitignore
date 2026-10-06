@@ -36,3 +36,6 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
+
+# TypeScript cache
+*.tsbuildinfo

@@ -5,7 +5,7 @@
 |---|---|---|---|---|---|
 | P0 | Pre-flight | DONE | main | 2026-10-06 | Pre-flight audit complete, certified in docs/PREFLIGHT.md |
 | U00 | Foundation and tooling | DONE | unit/u00-foundation | 2026-10-06 | All 30 tests pass; build clean; health endpoint live |
-| U01 | Design system and layouts | TODO | | | |
+| U01 | Design system and layouts | DONE | unit/u01-design-system | 2026-10-06 | 24 UI primitives, storefront & admin components, PublicLayout & AdminLayout, /dev/ui showcase live, all 46 tests pass |
 | U02 | Database and data access | TODO | | | |
 | U03 | Admin authentication and roles | TODO | | | |
 | U04 | Media service | TODO | | | |
@@ -36,7 +36,7 @@
 (unit, what changed, why, approved by)
 
 ## Follow-ups
-(found during unit X, description, priority)
+- U01: Browser subagent Playwright driver download 404 (playwright-1.57.0-win32_x64.zip CDN issue); manual browser inspection or local Playwright binary install needed for headless browser sessions. (Low priority)
 
 ## Dependencies added
 - next@15.5.27 — App Router framework
@@ -47,6 +47,17 @@
 - server-only@0.0.1 — Compile-time guard for server-only imports
 - lucide-react@0.468.0 — Iconography
 - clsx@2.1.1 + tailwind-merge@2.6.1 — Conditional class utilities
+- @radix-ui/react-dialog@1.2.0 — Accessible modal and bottom sheet primitive
+- @radix-ui/react-accordion@1.2.21 — Accessible accordion primitive
+- @radix-ui/react-select@2.3.8 — Accessible select dropdown primitive
+- @radix-ui/react-slot@1.2.0 — Polymorphic component rendering (asChild)
+- @radix-ui/react-tabs@1.1.12 — Accessible tabs primitive
+- @radix-ui/react-toast@1.2.6 — Accessible toast notifications
+- embla-carousel-react@8.6.0 — Accessible touch carousel
+- @testing-library/react@16.3.3 (dev) — Component test utilities
+- @testing-library/user-event@14.6.7 (dev) — User event simulator for testing
+- @testing-library/jest-dom@7.0.1 (dev) — DOM assertions for vitest
+- jsdom@30.1.2 (dev) — DOM environment for vitest
 
 ## Manual steps pending (human)
 - [ ] Create Supabase Dev project (for U02) and obtain project URL & keys.
