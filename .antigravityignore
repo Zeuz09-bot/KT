@@ -1,0 +1,53 @@
+# Dependency directories
+node_modules/
+vendor/
+.venv/
+venv/
+env/
+__pycache__/
+
+# Build and distribution outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+target/
+
+# Logs and runtime data
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# Testing and coverage
+coverage/
+.nyc_output/
+.playwright/
+test-results/
+
+# Environment files and credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+
+# System & IDE artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+
+# Large binary files (docs/design/ reference images are tracked)
+*.zip
+*.tar.gz
+*.iso
