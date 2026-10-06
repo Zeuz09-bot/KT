@@ -4,7 +4,7 @@
 | Unit | Name | Status | Branch | Merged | Notes |
 |---|---|---|---|---|---|
 | P0 | Pre-flight | DONE | main | 2026-10-06 | Pre-flight audit complete, certified in docs/PREFLIGHT.md |
-| U00 | Foundation and tooling | TODO | | | |
+| U00 | Foundation and tooling | DONE | unit/u00-foundation | 2026-10-06 | All 30 tests pass; build clean; health endpoint live |
 | U01 | Design system and layouts | TODO | | | |
 | U02 | Database and data access | TODO | | | |
 | U03 | Admin authentication and roles | TODO | | | |
@@ -39,7 +39,14 @@
 (found during unit X, description, priority)
 
 ## Dependencies added
-(package, version, reason)
+- next@15.5.27 — App Router framework
+- react@19.3.0, react-dom@19.3.0 — UI runtime
+- zod@3.25.76 — Server and client validation
+- tailwindcss@3.4.19 — Design token styling
+- vitest@2.1.9 — Unit test framework
+- server-only@0.0.1 — Compile-time guard for server-only imports
+- lucide-react@0.468.0 — Iconography
+- clsx@2.1.1 + tailwind-merge@2.6.1 — Conditional class utilities
 
 ## Manual steps pending (human)
 - [ ] Create Supabase Dev project (for U02) and obtain project URL & keys.
