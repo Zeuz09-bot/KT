@@ -1,2 +1,4 @@
-// Public module interface for catalog
-export {};
+/**
+ * Catalogue Module Public Interface
+ */
+export * from './repo';

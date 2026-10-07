@@ -1,2 +1,4 @@
-// Public module interface for orders
-export {};
+/**
+ * Orders Module Public Interface
+ */
+export * from './repo';

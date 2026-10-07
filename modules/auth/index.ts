@@ -1,2 +1,4 @@
-// Public module interface for auth
-export {};
+/**
+ * Auth Module Public Interface
+ */
+export * from './repo';
