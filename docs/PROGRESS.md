@@ -6,7 +6,7 @@
 | P0 | Pre-flight | DONE | main | 2026-10-06 | Pre-flight audit complete, certified in docs/PREFLIGHT.md |
 | U00 | Foundation and tooling | DONE | unit/u00-foundation | 2026-10-06 | All 30 tests pass; build clean; health endpoint live |
 | U01 | Design system and layouts | DONE | unit/u01-design-system | 2026-10-06 | 24 UI primitives, storefront & admin components, PublicLayout & AdminLayout, /dev/ui showcase live, all 46 tests pass |
-| U02 | Database and data access | TODO | | | |
+| U02 | Database and data access | DONE | unit/u02-database | 2026-10-07 | 58 tests pass; schema+RLS live on Supabase; repos, seed, and types committed |
 | U03 | Admin authentication and roles | TODO | | | |
 | U04 | Media service | TODO | | | |
 | U05 | Catalogue management | TODO | | | |
@@ -37,6 +37,8 @@
 
 ## Follow-ups
 - U01: Browser subagent Playwright driver download 404 (playwright-1.57.0-win32_x64.zip CDN issue); manual browser inspection or local Playwright binary install needed for headless browser sessions. (Low priority)
+- U02: vitest uses pool:forks + singleFork:true to work around child-process OOM on this host. If machine memory improves, this can be reverted to the default pool.
+- U02: Supabase PAT (sbp_fc56e...) was used to apply migrations — revoke it at https://supabase.com/dashboard/account/tokens after confirming it's no longer needed.
 
 ## Dependencies added
 - next@15.5.27 — App Router framework
@@ -60,5 +62,6 @@
 - jsdom@30.1.2 (dev) — DOM environment for vitest
 
 ## Manual steps pending (human)
-- [ ] Create Supabase Dev project (for U02) and obtain project URL & keys.
+- [ ] Create Supabase Dev project (for U02) and obtain project URL & keys. ✅ DONE 2026-10-07
+- [ ] Revoke the Supabase PAT used during U02 migrations: https://supabase.com/dashboard/account/tokens
 - [ ] Provide specific pickup street address in Ondo State (when ready for U06/U13).
