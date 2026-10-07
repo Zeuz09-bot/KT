@@ -1,2 +1,4 @@
-// Public module interface for content
-export {};
+/**
+ * Content Module Public Interface
+ */
+export * from './repo';
