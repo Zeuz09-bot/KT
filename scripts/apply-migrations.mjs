@@ -62,12 +62,16 @@ async function executeSql(sql, label) {
 }
 
 const migrationsDir = join(root, 'db', 'migrations');
-const files = readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
+const targetFile = process.argv[2];
+const files = targetFile
+  ? [targetFile]
+  : readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
 
 console.log(`Applying ${files.length} migration(s) to ${SUPABASE_URL}...\n`);
 
 for (const file of files) {
-  const sql = readFileSync(join(migrationsDir, file), 'utf8');
+  const filePath = file.includes('/') || file.includes('\\') ? file : join(migrationsDir, file);
+  const sql = readFileSync(filePath, 'utf8');
   const ok = await executeSql(sql, file);
   if (!ok) {
     console.error('\n❌ Migration failed — stopping.');

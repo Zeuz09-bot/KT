@@ -1,2 +1,2 @@
 // Public module interface for security
-export {};
+export * from './audit';

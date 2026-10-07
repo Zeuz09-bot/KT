@@ -7,7 +7,7 @@
 | U00 | Foundation and tooling | DONE | unit/u00-foundation | 2026-10-06 | All 30 tests pass; build clean; health endpoint live |
 | U01 | Design system and layouts | DONE | unit/u01-design-system | 2026-10-06 | 24 UI primitives, storefront & admin components, PublicLayout & AdminLayout, /dev/ui showcase live, all 46 tests pass |
 | U02 | Database and data access | DONE | unit/u02-database | 2026-10-07 | 58 tests pass; schema+RLS live on Supabase; repos, seed, and types committed |
-| U03 | Admin authentication and roles | TODO | | | |
+| U03 | Admin authentication and roles | DONE | unit/u03-admin-auth | | 83 tests pass; MFA & role guards enforced; login/step-machine UI live; owner staff management & audit pages built; Migration 003 applied; bootstrap script tested |
 | U04 | Media service | TODO | | | |
 | U05 | Catalogue management | TODO | | | |
 | U06 | Site content and settings | TODO | | | |
@@ -63,5 +63,6 @@
 
 ## Manual steps pending (human)
 - [ ] Create Supabase Dev project (for U02) and obtain project URL & keys. ✅ DONE 2026-10-07
-- [ ] Revoke the Supabase PAT used during U02 migrations: https://supabase.com/dashboard/account/tokens
+- [ ] Revoke the Supabase PAT used during migrations: https://supabase.com/dashboard/account/tokens
+- [ ] Test owner login at `/admin/login` using `owner@keraunous.ng` and enroll TOTP MFA with your authenticator app.
 - [ ] Provide specific pickup street address in Ondo State (when ready for U06/U13).

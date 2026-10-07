@@ -693,6 +693,12 @@ export interface Database {
         Args: Record<PropertyKey, never>;
         Returns: Json;
       };
+      deactivate_admin_user: {
+        Args: {
+          p_user_id: string;
+        };
+        Returns: Json;
+      };
     };
   };
 }
