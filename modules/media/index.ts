@@ -1,2 +1,6 @@
-// Public module interface for media
-export {};
+/**
+ * Public Media Module Interface
+ */
+export * from './pipeline';
+export * from './repo';
+export * from './actions';

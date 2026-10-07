@@ -8,7 +8,7 @@
 | U01 | Design system and layouts | DONE | unit/u01-design-system | 2026-10-06 | 24 UI primitives, storefront & admin components, PublicLayout & AdminLayout, /dev/ui showcase live, all 46 tests pass |
 | U02 | Database and data access | DONE | unit/u02-database | 2026-10-07 | 58 tests pass; schema+RLS live on Supabase; repos, seed, and types committed |
 | U03 | Admin authentication and roles | DONE | unit/u03-admin-auth | | 83 tests pass; MFA & role guards enforced; login/step-machine UI live; owner staff management & audit pages built; Migration 003 applied; bootstrap script tested |
-| U04 | Media service | TODO | | | |
+| U04 | Media service | DONE | unit/u04-media | | 100 tests pass; product-media bucket + RLS; client pipeline (resize→WebP→EXIF strip); signed upload actions; orphan cleanup script; migration 004 applied |
 | U05 | Catalogue management | TODO | | | |
 | U06 | Site content and settings | TODO | | | |
 | U07 | Public catalogue pages | TODO | | | |
