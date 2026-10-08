@@ -3,3 +3,4 @@ export * from '../constants';
 export * from '../result';
 export * from './auth';
 export * from './media';
+export * from './catalog';

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { cn } from '@/lib/cn';
 import { OrderStatus, CUSTOMER_STATUS_LABELS } from '@/lib/constants';
 
-export type StatusPillVariant = OrderStatus | 'active' | 'draft' | 'archived' | 'out_of_stock';
+export type StatusPillVariant = OrderStatus | 'active' | 'published' | 'draft' | 'archived' | 'out_of_stock';
 
 export interface StatusPillProps extends React.HTMLAttributes<HTMLSpanElement> {
   status: StatusPillVariant;
@@ -61,6 +61,12 @@ const STATUS_CONFIGS: Record<
   },
   active: {
     label: 'Active',
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-700',
+    dot: 'bg-emerald-500',
+  },
+  published: {
+    label: 'Published',
     bg: 'bg-emerald-50',
     text: 'text-emerald-700',
     dot: 'bg-emerald-500',

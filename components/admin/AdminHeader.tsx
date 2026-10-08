@@ -7,6 +7,10 @@ import {
   Users,
   ShieldAlert,
   LogOut,
+  Package,
+  Tag,
+  FolderTree,
+  Percent,
   ShieldCheck,
 } from 'lucide-react';
 import { logoutAction } from '@/modules/auth/actions';
@@ -30,8 +34,12 @@ export function AdminHeader({ profile, email }: AdminHeaderProps) {
 
   const navLinks = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/admin/products', label: 'Products', icon: Package },
+    { href: '/admin/brands', label: 'Brands', icon: Tag },
+    { href: '/admin/categories', label: 'Categories', icon: FolderTree },
     ...(profile.role === 'owner'
       ? [
+          { href: '/admin/tools/bulk-price', label: 'Bulk Pricing', icon: Percent },
           { href: '/admin/staff', label: 'Staff Management', icon: Users },
           { href: '/admin/audit', label: 'Audit Log', icon: ShieldAlert },
         ]

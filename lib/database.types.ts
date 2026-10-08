@@ -587,6 +587,29 @@ export interface Database {
           created_at?: string;
         };
       };
+      slug_redirects: {
+        Row: {
+          id: number;
+          old_slug: string;
+          new_slug: string;
+          product_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          old_slug: string;
+          new_slug: string;
+          product_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          old_slug?: string;
+          new_slug?: string;
+          product_id?: string | null;
+          created_at?: string;
+        };
+      };
     };
     Views: {
       v_product_cards: {

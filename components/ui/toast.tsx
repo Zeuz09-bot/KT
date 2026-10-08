@@ -28,6 +28,22 @@ interface ToastContextValue {
 
 const ToastContext = React.createContext<ToastContextValue | null>(null);
 
+export interface ToastOptions {
+  title: string;
+  message?: string;
+  description?: string;
+  variant?: ToastVariant;
+  duration?: number;
+}
+
+let toastSubscriber: ((opts: ToastOptions) => void) | null = null;
+
+export function toast(options: ToastOptions) {
+  if (toastSubscriber) {
+    toastSubscriber(options);
+  }
+}
+
 export function useToast() {
   const ctx = React.useContext(ToastContext);
   if (!ctx) throw new Error('useToast must be used within <Toaster>');
@@ -51,6 +67,20 @@ export function Toaster({ children }: { children: React.ReactNode }) {
       { ...msg, id: `toast-${Date.now()}-${Math.random()}` },
     ]);
   }, []);
+
+  React.useEffect(() => {
+    toastSubscriber = (opts) => {
+      push({
+        title: opts.title,
+        description: opts.description ?? opts.message,
+        variant: opts.variant ?? 'info',
+        duration: opts.duration,
+      });
+    };
+    return () => {
+      toastSubscriber = null;
+    };
+  }, [push]);
 
   function dismiss(id: string) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
