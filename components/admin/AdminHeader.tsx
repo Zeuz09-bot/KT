@@ -12,6 +12,8 @@ import {
   FolderTree,
   Percent,
   ShieldCheck,
+  Layers,
+  Settings,
 } from 'lucide-react';
 import { logoutAction } from '@/modules/auth/actions';
 import { Badge } from '@/components/ui/badge';
@@ -37,9 +39,11 @@ export function AdminHeader({ profile, email }: AdminHeaderProps) {
     { href: '/admin/products', label: 'Products', icon: Package },
     { href: '/admin/brands', label: 'Brands', icon: Tag },
     { href: '/admin/categories', label: 'Categories', icon: FolderTree },
+    { href: '/admin/content', label: 'Content', icon: Layers },
     ...(profile.role === 'owner'
       ? [
           { href: '/admin/tools/bulk-price', label: 'Bulk Pricing', icon: Percent },
+          { href: '/admin/settings', label: 'Settings', icon: Settings },
           { href: '/admin/staff', label: 'Staff Management', icon: Users },
           { href: '/admin/audit', label: 'Audit Log', icon: ShieldAlert },
         ]

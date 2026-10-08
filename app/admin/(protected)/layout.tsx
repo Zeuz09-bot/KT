@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { requireAdmin } from '@/modules/auth/guards';
 import { AdminHeader } from '@/components/admin/AdminHeader';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Admin Console | Keraunous Tech Store',
   robots: {

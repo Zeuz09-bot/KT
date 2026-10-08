@@ -4,3 +4,4 @@ export * from '../result';
 export * from './auth';
 export * from './media';
 export * from './catalog';
+export * from './content';
