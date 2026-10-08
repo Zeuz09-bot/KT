@@ -10,7 +10,7 @@
 | U03 | Admin authentication and roles | DONE | unit/u03-admin-auth | | 83 tests pass; MFA & role guards enforced; login/step-machine UI live; owner staff management & audit pages built; Migration 003 applied; bootstrap script tested |
 | U04 | Media service | DONE | unit/u04-media | | 100 tests pass; product-media bucket + RLS; client pipeline (resize→WebP→EXIF strip); signed upload actions; orphan cleanup script; migration 004 applied |
 | U05 | Catalogue management | DONE | unit/u05-catalogue | | 145 tests pass; admin product CRUD, variants, brands, categories, bulk price, slug, publish guard, 28 files; pnpm check exit 0 |
-| U06 | Site content and settings | TODO | | | |
+| U06 | Site content and settings | DONE | unit/u06-content-settings | | 180 tests pass; getSiteContent public projection with privacy guard, banners CRUD, flash sale campaign manager, trust bar editor, owner settings (WhatsApp, kill switches, hold hours, hours, template preview), migration 006, pnpm check exit 0 |
 | U07 | Public catalogue pages | TODO | | | |
 | U08 | Search and filters | TODO | | | |
 | U09 | Wishlist and Order List | TODO | | | |
@@ -39,6 +39,9 @@
 - U01: Browser subagent Playwright driver download 404 (playwright-1.57.0-win32_x64.zip CDN issue); manual browser inspection or local Playwright binary install needed for headless browser sessions. (Low priority)
 - U02: vitest uses pool:forks + singleFork:true to work around child-process OOM on this host. If machine memory improves, this can be reverted to the default pool.
 - U02: Supabase PAT (sbp_fc56e...) was used to apply migrations — revoke it at https://supabase.com/dashboard/account/tokens after confirming it's no longer needed.
+- U05: Apply db/migrations/20261007000005_slug_redirects.sql on the hosted Supabase dev project.
+- U06: Apply db/migrations/20261008000006_content_seed.sql on the hosted Supabase dev project.
+- U06: WhatsApp number change email alert is logged to audit_log for v1; email notification integration deferred to U16 (Notifications).
 
 ## Dependencies added
 - next@15.5.27 — App Router framework
