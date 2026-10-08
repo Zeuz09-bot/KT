@@ -9,7 +9,7 @@
 | U02 | Database and data access | DONE | unit/u02-database | 2026-10-07 | 58 tests pass; schema+RLS live on Supabase; repos, seed, and types committed |
 | U03 | Admin authentication and roles | DONE | unit/u03-admin-auth | | 83 tests pass; MFA & role guards enforced; login/step-machine UI live; owner staff management & audit pages built; Migration 003 applied; bootstrap script tested |
 | U04 | Media service | DONE | unit/u04-media | | 100 tests pass; product-media bucket + RLS; client pipeline (resize→WebP→EXIF strip); signed upload actions; orphan cleanup script; migration 004 applied |
-| U05 | Catalogue management | TODO | | | |
+| U05 | Catalogue management | DONE | unit/u05-catalogue | | 145 tests pass; admin product CRUD, variants, brands, categories, bulk price, slug, publish guard, 28 files; pnpm check exit 0 |
 | U06 | Site content and settings | TODO | | | |
 | U07 | Public catalogue pages | TODO | | | |
 | U08 | Search and filters | TODO | | | |
