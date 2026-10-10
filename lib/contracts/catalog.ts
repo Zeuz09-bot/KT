@@ -1,8 +1,9 @@
 /**
- * Keraunous Tech Store — Catalogue Contracts (U05)
+ * Keraunous Tech Store — Catalogue Contracts (U05 + U07)
  *
  * Zod schemas and TypeScript types for all catalogue admin operations.
  * Product creation, variant management, brand/category CRUD, bulk pricing, CSV import.
+ * Storefront projection schemas and logic (U07).
  */
 
 import { z } from 'zod';
@@ -234,3 +235,104 @@ export type PublishGuardResult = {
   canPublish: boolean;
   errors:     PublishGuardError[];
 };
+
+// ---------------------------------------------------------------------------
+// Storefront schemas (U07)
+// ---------------------------------------------------------------------------
+
+export const listingFiltersSchema = z.object({
+  brand: z.string().optional(),
+  category: z.string().optional(),
+  sort: z.enum(['price_asc', 'price_desc', 'newest']).default('newest'),
+  page: z.coerce.number().min(1).default(1),
+  condition: z.enum(['brand_new', 'uk_used', 'open_box']).optional(),
+  search: z.string().optional(),
+});
+
+export type ListingFilters = z.infer<typeof listingFiltersSchema>;
+
+export function parseListingFilters(searchParams: URLSearchParams | { [key: string]: string | string[] | undefined }): ListingFilters {
+  const params: Record<string, any> = {};
+  
+  if (searchParams instanceof URLSearchParams) {
+    for (const [key, value] of searchParams.entries()) {
+      params[key] = value;
+    }
+  } else {
+    for (const key of Object.keys(searchParams)) {
+      const val = searchParams[key];
+      if (Array.isArray(val)) params[key] = val[0];
+      else if (val) params[key] = val;
+    }
+  }
+
+  return listingFiltersSchema.parse(params);
+}
+
+// Storefront Product Projection
+export interface StorefrontProduct {
+  id: string;
+  slug: string;
+  name: string;
+  short_description: string | null;
+  description: string | null;
+  badge: string | null;
+  is_featured: boolean;
+  specs: Specs | null;
+  brand: { id: string; name: string; slug: string };
+  category: { id: string; name: string; slug: string };
+  variants: StorefrontVariant[];
+  lowest_price: number;
+  total_stock: number;
+  featured_image: string | null;
+}
+
+export interface StorefrontVariant {
+  id: string;
+  product_id: string;
+  storage_gb: number | null;
+  ram_gb: number | null;
+  color: string | null;
+  color_hex: string | null;
+  condition: 'brand_new' | 'uk_used' | 'open_box';
+  price_ngn: number;
+  sale_price_ngn: number | null;
+  compare_at_price_ngn: number | null;
+  sale_starts_at: string | null;
+  sale_ends_at: string | null;
+  stock_qty: number;
+  warranty_months: number | null;
+}
+
+export function formatWarranty(condition: string, months?: number | null): string {
+  const m = months ?? (condition === 'brand_new' ? 12 : 3);
+  if (condition === 'brand_new') return `${m} Months Official Warranty`;
+  if (condition === 'uk_used') return `${m} Months Store Warranty`;
+  return `${m} Months Warranty`;
+}
+
+// Variant resolution algorithm
+export function resolveVariant(variants: StorefrontVariant[], selection: Partial<StorefrontVariant>): StorefrontVariant | null {
+  if (!variants || variants.length === 0) return null;
+
+  // Exact match
+  const exactMatch = variants.find((v) => {
+    let match = true;
+    if (selection.storage_gb !== undefined && v.storage_gb !== selection.storage_gb) match = false;
+    if (selection.color !== undefined && v.color !== selection.color) match = false;
+    if (selection.condition !== undefined && v.condition !== selection.condition) match = false;
+    return match;
+  });
+
+  if (exactMatch && exactMatch.stock_qty > 0) return exactMatch;
+  if (exactMatch) return exactMatch; // Even if out of stock
+
+  // Fallback to cheapest in stock
+  const inStock = variants.filter(v => v.stock_qty > 0);
+  if (inStock.length > 0) {
+    return inStock.reduce((prev, curr) => (curr.sale_price_ngn ?? curr.price_ngn) < (prev.sale_price_ngn ?? prev.price_ngn) ? curr : prev);
+  }
+
+  // Fallback to cheapest overall
+  return variants.reduce((prev, curr) => (curr.sale_price_ngn ?? curr.price_ngn) < (prev.sale_price_ngn ?? prev.price_ngn) ? curr : prev);
+}

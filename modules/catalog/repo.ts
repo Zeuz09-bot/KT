@@ -45,12 +45,18 @@ export async function listProductCards(
     isFeatured?: boolean;
     limit?: number;
     offset?: number;
+    sort?: 'newest' | 'price_asc' | 'price_desc';
+    condition?: 'brand_new' | 'uk_used' | 'open_box';
+    search?: string;
   } = {},
 ): Promise<ProductCardView[]> {
   let query = supabase
     .from('v_product_cards')
-    .select('*')
-    .order('published_at', { ascending: false });
+    .select('*');
+
+  // We handle condition by filtering on the client, or we could filter variants inside the view.
+  // Wait, v_product_cards doesn't have 'condition'. It only has product level details + lowest_price.
+  // We'll apply basic product level filters here.
 
   if (options.brandSlug) {
     query = query.eq('brand_slug', options.brandSlug);
@@ -61,6 +67,24 @@ export async function listProductCards(
   if (options.isFeatured !== undefined) {
     query = query.eq('is_featured', options.isFeatured);
   }
+  if (options.search) {
+    query = query.ilike('name', `%${options.search}%`);
+  }
+
+  // Sorting
+  switch (options.sort) {
+    case 'price_asc':
+      query = query.order('lowest_price', { ascending: true });
+      break;
+    case 'price_desc':
+      query = query.order('lowest_price', { ascending: false });
+      break;
+    case 'newest':
+    default:
+      query = query.order('published_at', { ascending: false });
+      break;
+  }
+
   if (options.limit) {
     const from = options.offset ?? 0;
     query = query.range(from, from + options.limit - 1);
