@@ -12,7 +12,7 @@
 | U05 | Catalogue management | DONE | unit/u05-catalogue | | 145 tests pass; admin product CRUD, variants, brands, categories, bulk price, slug, publish guard, 28 files; pnpm check exit 0 |
 | U06 | Site content and settings | DONE | unit/u06-content-settings | | 180 tests pass; getSiteContent public projection with privacy guard, banners CRUD, flash sale campaign manager, trust bar editor, owner settings (WhatsApp, kill switches, hold hours, hours, template preview), migration 006, pnpm check exit 0 |
 | U07 | Public catalogue pages | DONE | unit/u07-public-catalogue | | Home page with hero carousel, trust bar, product sections; listing pages (shop, category, brand, deals, new-arrivals, best-sellers); product detail with gallery, variant selector, spec chips; storefront components; error/not-found pages; 187 tests pass, build succeeds
-| U08 | Search and filters | TODO | | | |
+| U08 | Search and filters | DONE | unit/u08-search-filters | | 197 tests pass; GET /api/search (rate-limited, normalised, edge-cached); SearchBar with keyboard nav, recent-searches history, WhatsApp fallback; FilterSidebar (desktop) + FilterBottomSheet (mobile); all state URL-driven; PaginationNav wrapper; noindex on filtered URLs; pnpm check exit 0 |
 | U09 | Wishlist and Order List | TODO | | | |
 | U10 | Order service and WhatsApp handoff | TODO | | | |
 | U11 | Order management | TODO | | | |
