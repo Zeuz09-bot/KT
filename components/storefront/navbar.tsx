@@ -11,7 +11,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Search, Heart, ClipboardList, Menu, X, Phone } from 'lucide-react';
+import { Heart, ClipboardList, Menu, X, Phone } from 'lucide-react';
+import { SearchBar } from './search';
 
 export interface NavbarProps {
   orderListCount?: number;
@@ -45,7 +46,7 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
 
       {/* Main bar */}
       <nav aria-label="Main navigation">
-        <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 sm:px-6">
           {/* Logo */}
           <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Keraunous Tech Store — Home">
             <span className="rounded-lg bg-brand-blue px-2 py-1 text-sm font-bold text-white tracking-tight">
@@ -68,16 +69,13 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
             ))}
           </ul>
 
+          {/* Search — desktop */}
+          <div className="hidden flex-1 max-w-md lg:block">
+            <SearchBar />
+          </div>
+
           {/* Actions */}
-          <div className="flex items-center gap-1">
-            {/* Search */}
-            <Link
-              href="/shop"
-              aria-label="Search products"
-              className="flex h-10 w-10 items-center justify-center rounded-card-sm text-neutral-600 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-blue"
-            >
-              <Search size={20} aria-hidden="true" />
-            </Link>
+          <div className="ml-auto flex items-center gap-1">
 
             {/* Wishlist */}
             <Link
@@ -124,7 +122,11 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
         {/* Mobile menu */}
         {mobileOpen && (
           <div id="mobile-nav" className="border-t border-neutral-200 bg-neutral-0 lg:hidden">
-            <ul className="flex flex-col py-2" role="list">
+            {/* Search — mobile */}
+            <div className="px-4 py-3">
+              <SearchBar />
+            </div>
+            <ul className="flex flex-col py-1" role="list">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
