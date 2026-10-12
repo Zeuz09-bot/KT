@@ -252,8 +252,8 @@ export const listingFiltersSchema = z.object({
 export type ListingFilters = z.infer<typeof listingFiltersSchema>;
 
 export function parseListingFilters(searchParams: URLSearchParams | { [key: string]: string | string[] | undefined }): ListingFilters {
-  const params: Record<string, any> = {};
-  
+  const params: Record<string, string> = {};
+
   if (searchParams instanceof URLSearchParams) {
     for (const [key, value] of searchParams.entries()) {
       params[key] = value;
@@ -327,12 +327,15 @@ export function resolveVariant(variants: StorefrontVariant[], selection: Partial
   if (exactMatch && exactMatch.stock_qty > 0) return exactMatch;
   if (exactMatch) return exactMatch; // Even if out of stock
 
+  // Helper to get effective price
+  const getPrice = (v: StorefrontVariant) => v.sale_price_ngn ?? v.price_ngn;
+
   // Fallback to cheapest in stock
   const inStock = variants.filter(v => v.stock_qty > 0);
   if (inStock.length > 0) {
-    return inStock.reduce((prev, curr) => (curr.sale_price_ngn ?? curr.price_ngn) < (prev.sale_price_ngn ?? prev.price_ngn) ? curr : prev);
+    return [...inStock].sort((a, b) => getPrice(a) - getPrice(b))[0];
   }
 
   // Fallback to cheapest overall
-  return variants.reduce((prev, curr) => (curr.sale_price_ngn ?? curr.price_ngn) < (prev.sale_price_ngn ?? prev.price_ngn) ? curr : prev);
+  return [...variants].sort((a, b) => getPrice(a) - getPrice(b))[0];
 }
