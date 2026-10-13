@@ -74,11 +74,12 @@ function subscribe(callback: () => void) {
   };
 }
 
-let cachedItems: ListLineInput[] = [];
+const EMPTY_ORDER_ITEMS: ListLineInput[] = [];
+let cachedItems: ListLineInput[] = EMPTY_ORDER_ITEMS;
 let cachedRaw: string | null = null;
 
 function getSnapshot(): ListLineInput[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === 'undefined') return EMPTY_ORDER_ITEMS;
   try {
     const raw = window.localStorage.getItem(ORDER_LIST_STORAGE_KEY);
     if (raw !== cachedRaw) {
@@ -92,7 +93,7 @@ function getSnapshot(): ListLineInput[] {
 }
 
 function getServerSnapshot(): ListLineInput[] {
-  return [];
+  return EMPTY_ORDER_ITEMS;
 }
 
 export function useOrderList() {

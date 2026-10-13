@@ -70,11 +70,12 @@ function subscribe(callback: () => void) {
   };
 }
 
-let cachedItems: string[] = [];
+const EMPTY_WISHLIST_ITEMS: string[] = [];
+let cachedItems: string[] = EMPTY_WISHLIST_ITEMS;
 let cachedRaw: string | null = null;
 
 function getSnapshot(): string[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === 'undefined') return EMPTY_WISHLIST_ITEMS;
   try {
     const raw = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
     if (raw !== cachedRaw) {
@@ -88,7 +89,7 @@ function getSnapshot(): string[] {
 }
 
 function getServerSnapshot(): string[] {
-  return [];
+  return EMPTY_WISHLIST_ITEMS;
 }
 
 export function useWishlist() {
