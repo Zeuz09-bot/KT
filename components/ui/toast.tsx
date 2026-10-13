@@ -46,7 +46,24 @@ export function toast(options: ToastOptions) {
 
 export function useToast() {
   const ctx = React.useContext(ToastContext);
-  if (!ctx) throw new Error('useToast must be used within <Toaster>');
+  if (!ctx) {
+    return {
+      push: (msg: Omit<ToastMessage, 'id'>) =>
+        toast({
+          title: msg.title,
+          description: msg.description,
+          variant: msg.variant,
+          duration: msg.duration,
+        }),
+      toast: (msg: Omit<ToastMessage, 'id'>) =>
+        toast({
+          title: msg.title,
+          description: msg.description,
+          variant: msg.variant,
+          duration: msg.duration,
+        }),
+    };
+  }
   return ctx;
 }
 

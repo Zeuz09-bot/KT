@@ -6,3 +6,4 @@ export * from './media';
 export * from './catalog';
 export * from './content';
 export * from './list';
+export * from './orders';

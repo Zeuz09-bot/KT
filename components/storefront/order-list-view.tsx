@@ -24,6 +24,7 @@ import type { ResolvedLine } from '@/lib/contracts/list';
 import { formatNgn } from '@/lib/money';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { CustomerOrderForm } from '@/components/storefront/customer-order-form';
 
 export function OrderListView() {
   const {
@@ -223,7 +224,7 @@ export function OrderListView() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-12">
         {/* Line Items */}
-        <div className="space-y-4 lg:col-span-8">
+        <div className="space-y-4 lg:col-span-7">
           {resolvedLines.map((line) => {
             const isUnavailable = !line.available;
             return (
@@ -336,11 +337,19 @@ export function OrderListView() {
               </div>
             );
           })}
+
+          <div className="pt-2">
+            <Button asChild variant="ghost" size="sm" className="text-xs text-neutral-600">
+              <Link href="/shop">
+                + Add More Gadgets from Catalogue
+              </Link>
+            </Button>
+          </div>
         </div>
 
-        {/* Order Summary & Notice */}
-        <div className="lg:col-span-4">
-          <div className="sticky top-24 rounded-card-md border border-neutral-200 bg-neutral-0 p-6 shadow-sm">
+        {/* Order Summary & Customer Form */}
+        <div className="space-y-6 lg:col-span-5">
+          <div className="rounded-card-md border border-neutral-200 bg-neutral-0 p-6 shadow-sm">
             <h2 className="text-lg font-bold text-neutral-900">
               Order Summary
             </h2>
@@ -364,35 +373,20 @@ export function OrderListView() {
               </div>
             </dl>
 
-            {/* Crucial Blueprint Note (§9.5) */}
-            <div className="mt-5 flex items-start gap-2 rounded-md bg-blue-50/70 p-3 text-xs text-blue-900">
+            <div className="mt-4 flex items-start gap-2 rounded-md bg-blue-50/70 p-3 text-xs text-blue-900">
               <Info className="h-4 w-4 shrink-0 text-brand-blue mt-0.5" />
               <p>
                 Delivery fee and final price confirmed on WhatsApp with seller before transfer.
               </p>
             </div>
-
-            <div className="mt-6 space-y-3">
-              <Button
-                asChild
-                size="lg"
-                variant="whatsapp"
-                className="w-full gap-2 text-base font-semibold"
-                disabled={subtotalNgn === 0}
-              >
-                <Link href="/shop">
-                  Continue to Order
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-
-              <Button asChild variant="ghost" size="sm" className="w-full text-xs text-neutral-600">
-                <Link href="/shop">
-                  + Add More Products
-                </Link>
-              </Button>
-            </div>
           </div>
+
+          {/* Customer checkout details form */}
+          <CustomerOrderForm
+            lines={resolvedLines}
+            subtotalNgn={subtotalNgn}
+            onPriceChanged={resolveList}
+          />
         </div>
       </div>
     </div>

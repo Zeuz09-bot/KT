@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Heart, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { VariantSelector } from '@/components/storefront/variant-selector';
+import { QuickOrderSheet } from '@/components/storefront/quick-order-sheet';
 import { useOrderList } from '@/lib/hooks/use-order-list';
 import { useWishlist } from '@/lib/hooks/use-wishlist';
 import { useToast } from '@/components/ui/toast';
@@ -33,6 +34,7 @@ export function ProductPurchaseBox({
   whatsappNumber = '2348070822409',
 }: ProductPurchaseBoxProps) {
   const [selectedVariant, setSelectedVariant] = useState<StorefrontVariant | null>(initialVariant);
+  const [showQuickOrder, setShowQuickOrder] = useState(false);
   const { add: addToList, isFull } = useOrderList();
   const { has: isWishlisted, toggle: toggleWishlist } = useWishlist();
   const { toast } = useToast();
@@ -125,19 +127,14 @@ export function ProductPurchaseBox({
       <div className="flex flex-wrap gap-3">
         {/* Primary: Order on WhatsApp */}
         <Button
-          asChild
+          type="button"
           size="lg"
           variant="whatsapp"
+          onClick={() => setShowQuickOrder(true)}
           className="flex-1 min-w-[200px]"
-          disabled={isSoldOut}
+          disabled={isSoldOut || !variant}
         >
-          <a
-            href={waInquiryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Order on WhatsApp
-          </a>
+          Order on WhatsApp
         </Button>
 
         {/* Secondary: Add to Order List */}
@@ -170,11 +167,26 @@ export function ProductPurchaseBox({
         </Button>
       </div>
 
-      <div className="text-xs text-neutral-500">
+      <div className="flex items-center justify-between text-xs text-neutral-500">
         <Link href="/order-list" className="hover:text-brand-blue hover:underline">
           View your Order List &rarr;
         </Link>
+        <a
+          href={waInquiryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-brand-blue hover:underline"
+        >
+          Have questions? Ask on WhatsApp
+        </a>
       </div>
+
+      <QuickOrderSheet
+        open={showQuickOrder}
+        onOpenChange={setShowQuickOrder}
+        productName={productName}
+        variant={variant}
+      />
     </div>
   );
 }

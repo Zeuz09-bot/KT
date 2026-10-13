@@ -58,10 +58,30 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const isBusy = Boolean(loading || isLoading);
     const isDisabled = Boolean(disabled || isBusy);
-    const Comp = asChild ? Slot : 'button';
+    if (asChild) {
+      return (
+        <Slot
+          ref={ref}
+          aria-busy={isBusy || undefined}
+          className={cn(
+            // Base
+            'inline-flex items-center justify-center gap-2 font-medium transition-colors duration-150',
+            'min-h-[44px] min-w-[44px]', // tap target
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue',
+            'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
+            variant !== 'icon' && sizeClasses[size],
+            variantClasses[variant],
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
 
     return (
-      <Comp
+      <button
         ref={ref}
         disabled={isDisabled}
         aria-busy={isBusy || undefined}
@@ -87,7 +107,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </span>
         )}
         {children}
-      </Comp>
+      </button>
     );
   },
 );
