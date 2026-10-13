@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Layers,
   Settings,
+  ShoppingCart,
 } from 'lucide-react';
 import { logoutAction } from '@/modules/auth/actions';
 import { Badge } from '@/components/ui/badge';
@@ -36,6 +37,7 @@ export function AdminHeader({ profile, email }: AdminHeaderProps) {
 
   const navLinks = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/admin/orders', label: 'Orders', icon: ShoppingCart },
     { href: '/admin/products', label: 'Products', icon: Package },
     { href: '/admin/brands', label: 'Brands', icon: Tag },
     { href: '/admin/categories', label: 'Categories', icon: FolderTree },
