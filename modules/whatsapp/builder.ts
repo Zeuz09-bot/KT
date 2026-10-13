@@ -99,3 +99,11 @@ export function buildQuestionUrl(
     : `Hi, I'm interested in ${productName}`;
   return buildWaUrl(businessPhone, text);
 }
+
+export function buildOrderInquiryUrl(
+  businessPhone: string,
+  publicId: string,
+): string {
+  const text = `Hello Keraunous 👋\nI would like to inquire about my order: ${publicId}`;
+  return buildWaUrl(businessPhone, text);
+}

@@ -15,7 +15,7 @@
 | U08 | Search and filters | DONE | unit/u08-search-filters | | 197 tests pass; GET /api/search (rate-limited, normalised, edge-cached); SearchBar with keyboard nav, recent-searches history, WhatsApp fallback; FilterSidebar (desktop) + FilterBottomSheet (mobile); all state URL-driven; PaginationNav wrapper; noindex on filtered URLs; pnpm check exit 0 |
 | U09 | Wishlist and Order List | DONE | unit/u09-wishlist-order-list | | 231 tests pass; /order-list and /wishlist live; useOrderList & useWishlist hooks with cross-tab sync and storage versioning (krn:list:v1, krn:wish:v1); POST /api/list/resolve (rate-limited, server prices, out-of-stock exclusion, price change banner); POST /api/wishlist/resolve; ProductPurchaseBox with Add to List & toast; live navbar badges; pnpm check exit 0 |
 | U11 | Order management | DONE | unit/u11-order-management | | 292 tests pass; admin order desk (/admin/orders, /admin/orders/[id]); state machine RPC caller with role enforcement; transition modal dialogs (payment, dispatch, imei, cancel); order timeline; WhatsApp templates; CSV export; dashboard stats; pnpm check exit 0 |
-| U12 | Order tracking | TODO | | | |
+| U12 | Order tracking | DONE | unit/u12-order-tracking | | 306 tests pass; POST /api/track with constant-latency protection (>=300ms), 10/min IP & 5/10min ID rate limits, Turnstile verification, minimal customer projection; public /track page with live stepper timeline, snapshot items, courier waybill info, WhatsApp inquiry action; pnpm check exit 0 |
 | U13 | Trust and policy pages | TODO | | | |
 | U14 | SEO, sharing and analytics | TODO | | | |
 | U15 | Security hardening | TODO | | | |
