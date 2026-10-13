@@ -10,6 +10,9 @@ import { POST as handoffHandler } from '../../app/api/orders/handoff/route';
 import { signHandoffToken } from '../../lib/handoffToken';
 import { resetRateLimit } from '../../lib/rateLimit';
 
+// Mock server-only
+vi.mock('server-only', () => ({}));
+
 // Mock Supabase admin client
 const mockRpc = vi.fn();
 const mockFrom = vi.fn();

@@ -25,6 +25,7 @@ import {
   buildWaUrl,
   buildWaWebUrl,
 } from '@/modules/whatsapp';
+import { notifyAdminAsync } from '@/modules/notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -284,6 +285,19 @@ export async function POST(request: NextRequest) {
     messageText,
     handoffToken,
   };
+
+  // 9. Fire non-blocking seller notification (§U16, DoD: failure never blocks order)
+  const itemsSummary = itemsSnapshot.map((i) => `${i.productName} (x${i.qty})`).join(', ');
+  notifyAdminAsync({
+    type: 'new_order',
+    data: {
+      orderId: publicId,
+      itemCount: itemsSnapshot.reduce((acc, i) => acc + i.qty, 0),
+      totalNgn,
+      fulfilmentState: orderInput.delivery?.state ?? 'Pickup',
+      itemsSummary,
+    },
+  });
 
   return NextResponse.json(
     {
