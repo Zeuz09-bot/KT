@@ -9,7 +9,7 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { checkRateLimit } from '@/lib/rateLimit';
+import { checkPolicyRateLimit } from '@/lib/rateLimit';
 import { hashIp } from '@/lib/logger';
 import { verifyHandoffToken } from '@/lib/handoffToken';
 import { z } from 'zod';
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   const ipHash = hashIp(ip);
 
-  // Rate limit: 20 per hour per IP
-  const rateResult = checkRateLimit(`handoff-ip:${ipHash}`, 20, 60 * 60 * 1000);
+  // Rate limit: 10 per hour per IP (Blueprint §10.3)
+  const rateResult = checkPolicyRateLimit('handoff', ipHash);
   if (!rateResult.allowed) {
     return NextResponse.json(
       { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many requests' } },

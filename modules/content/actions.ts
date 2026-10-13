@@ -4,6 +4,7 @@ import { revalidateTag } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { requireAdmin, requireOwner } from '@/modules/auth/guards';
 import { writeAuditLog } from '@/modules/security/audit';
+import { recordOwnerAlert } from '@/modules/security/alerts';
 import { ok, err, type ApiResponse, type ErrorCode } from '@/lib/result';
 import {
   BannerSchema,
@@ -239,7 +240,7 @@ export async function saveSettingsAction(rawInput: unknown): Promise<Result<{ su
   try {
     const existingSettings = await adminGetAllSettings(supabase);
 
-    // Alert / Audit for WhatsApp number change
+    // Alert / Audit for WhatsApp number change (§U06, §U15)
     const oldPhone = existingSettings['whatsapp_number'];
     if (oldPhone && oldPhone !== input.whatsapp_number) {
       await writeAuditLog({
@@ -249,6 +250,18 @@ export async function saveSettingsAction(rawInput: unknown): Promise<Result<{ su
         entityId: 'whatsapp_number',
         before: ({ whatsapp_number: oldPhone } as unknown as Json),
         after: ({ whatsapp_number: input.whatsapp_number } as unknown as Json),
+      });
+
+      await recordOwnerAlert({
+        type: 'whatsapp_changed',
+        severity: 'critical',
+        title: 'Business WhatsApp Number Modified',
+        message: `WhatsApp number changed from ${oldPhone} to ${input.whatsapp_number} by owner ${ownerCtx.user.email ?? ownerCtx.user.id}.`,
+        meta: {
+          oldPhone,
+          newPhone: input.whatsapp_number,
+          actorId: ownerCtx.user.id,
+        },
       });
     }
 

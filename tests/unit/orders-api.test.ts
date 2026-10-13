@@ -21,6 +21,10 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }));
 
+vi.mock('@/modules/security/blocklist', () => ({
+  isBlocked: vi.fn().mockResolvedValue({ blocked: false }),
+}));
+
 beforeEach(() => {
   vi.clearAllMocks();
   // Clear in-memory rate limiter between tests

@@ -18,7 +18,7 @@
 | U12 | Order tracking | DONE | unit/u12-order-tracking | | 306 tests pass; POST /api/track with constant-latency protection (>=300ms), 10/min IP & 5/10min ID rate limits, Turnstile verification, minimal customer projection; public /track page with live stepper timeline, snapshot items, courier waybill info, WhatsApp inquiry action; pnpm check exit 0 |
 | U13 | Trust and policy pages | DONE | unit/u13-trust-policies | | 313 tests pass; 9 dedicated trust/policy pages live (/about, /contact, /faq, /how-to-order, /delivery, /warranty, /privacy, /terms, /verify-accounts); anti-impersonation notice with verified OPay account (8070822409) & WhatsApp (+2348070822409); tiered warranties (Brand New 12m, Open Box 90d, UK Used 30d/7d swap); NDPA-aligned privacy notice; updated footer & checkout links; pnpm check exit 0 |
 | U14 | SEO, sharing and analytics | DONE | unit/u14-seo-analytics | | 321 tests pass; dynamic sitemap (/sitemap.xml) & robots (/robots.txt); dynamic product OG preview card for WhatsApp (/api/og/product); JSON-LD schemas (Product with NGN currency and zero fake ratings, LocalBusiness, Breadcrumbs); privacy-safe client analytics tracker; UTM attribution on orders; Search Console & Google Business guide; pnpm check exit 0 |
-| U15 | Security hardening | TODO | | | |
+| U15 | Security hardening | DONE | unit/u15-security-hardening | | 343 tests pass; strict CSP (frame-ancestors 'none'), HSTS, nosniff, permissions policy; centralized rate limits (orders, handoff, track, search, resolve, login); fail-closed Turnstile; blocklist enforcement (403 BLOCKED); owner alerts recorded (whatsapp change, staff invite, repeated failed logins); log redaction (masked phones, hashed IPs, secret redaction); 1,000 orders & 500 track requests abuse throttle test verified; pnpm check exit 0 |
 | U16 | Notifications | TODO | | | |
 | U17 | QA, observability, backups, launch | TODO | | | |
 
@@ -41,6 +41,7 @@
 - U05: Apply db/migrations/20261007000005_slug_redirects.sql on the hosted Supabase dev project.
 - U06: Apply db/migrations/20261008000006_content_seed.sql on the hosted Supabase dev project.
 - U06: WhatsApp number change email alert is logged to audit_log for v1; email notification integration deferred to U16 (Notifications).
+- U15: Apply db/migrations/20261013000007_blocklist_and_alerts.sql on the hosted Supabase dev project.
 
 ## Dependencies added
 - next@15.5.27 — App Router framework

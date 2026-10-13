@@ -610,6 +610,64 @@ export interface Database {
           created_at?: string;
         };
       };
+      blocklist: {
+        Row: {
+          id: number;
+          kind: 'phone' | 'ip_hash';
+          value: string;
+          reason: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          kind: 'phone' | 'ip_hash';
+          value: string;
+          reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          kind?: 'phone' | 'ip_hash';
+          value?: string;
+          reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+      };
+      owner_alerts: {
+        Row: {
+          id: number;
+          type: 'whatsapp_changed' | 'new_staff' | 'repeated_failed_logins' | 'security_breach' | 'system';
+          severity: 'info' | 'warning' | 'critical';
+          title: string;
+          message: string;
+          meta: Json | null;
+          read_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          type: 'whatsapp_changed' | 'new_staff' | 'repeated_failed_logins' | 'security_breach' | 'system';
+          severity: 'info' | 'warning' | 'critical';
+          title: string;
+          message: string;
+          meta?: Json | null;
+          read_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          type?: 'whatsapp_changed' | 'new_staff' | 'repeated_failed_logins' | 'security_breach' | 'system';
+          severity?: 'info' | 'warning' | 'critical';
+          title?: string;
+          message?: string;
+          meta?: Json | null;
+          read_at?: string | null;
+          created_at?: string;
+        };
+      };
     };
     Views: {
       v_product_cards: {

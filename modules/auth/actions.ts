@@ -17,8 +17,9 @@ import { headers } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { ok, err, ApiResponse } from '@/lib/result';
-import { checkRateLimit, resetRateLimit } from '@/lib/rateLimit';
+import { checkPolicyRateLimit, resetRateLimit } from '@/lib/rateLimit';
 import { writeAuditLog } from '@/modules/security/audit';
+import { recordOwnerAlert } from '@/modules/security/alerts';
 import {
   LoginSchema,
   MfaVerifySchema,
@@ -76,14 +77,20 @@ export async function loginAction(
 ): Promise<ApiResponse<LoginResultData>> {
   const ip = await getClientIp();
   const ipHash = hashIp(ip);
-  const rateLimitKey = `login:${ipHash}`;
 
-  const rateCheck = checkRateLimit(rateLimitKey, 5, 15 * 60 * 1000);
+  const rateCheck = checkPolicyRateLimit('login', ipHash);
   if (!rateCheck.allowed) {
     await writeAuditLog({
       action: 'auth.login_rate_limited',
       entity: 'admin_users',
       ipHash,
+    });
+    await recordOwnerAlert({
+      type: 'repeated_failed_logins',
+      severity: 'warning',
+      title: 'Repeated Failed Admin Logins',
+      message: `IP hash ${ipHash} triggered admin login rate limit (5 failed attempts).`,
+      meta: { ipHash },
     });
     return err(
       'RATE_LIMITED',
@@ -130,7 +137,7 @@ export async function loginAction(
   }
 
   // Password passed: reset rate limit for this IP
-  resetRateLimit(rateLimitKey);
+  resetRateLimit(`login:${ipHash}`);
 
   // Check TOTP factors
   const { data: factorsData, error: factorsError } =
@@ -412,6 +419,14 @@ export async function inviteStaffAction(
     entity: 'admin_users',
     entityId: newUserId,
     after: { email, displayName, role },
+  });
+
+  await recordOwnerAlert({
+    type: 'new_staff',
+    severity: 'info',
+    title: 'New Staff Member Invited',
+    message: `Staff account invited for ${email} with role '${role}' by owner ${ownerUser.email ?? ownerUser.id}.`,
+    meta: { email, displayName, role, userId: newUserId },
   });
 
   return ok({ userId: newUserId });

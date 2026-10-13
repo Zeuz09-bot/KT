@@ -11,7 +11,8 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { checkRateLimit } from '@/lib/rateLimit';
+import { checkPolicyRateLimit } from '@/lib/rateLimit';
+import { verifyTurnstile } from '@/lib/turnstile';
 import { hashIp } from '@/lib/logger';
 import { TrackOrderRequestSchema } from '@/lib/contracts/track';
 import { trackOrder } from '@/modules/orders/repo';
@@ -21,30 +22,6 @@ import type { OrderStatus, FulfilmentType } from '@/lib/constants';
 export const dynamic = 'force-dynamic';
 
 const MIN_RESPONSE_LATENCY_MS = 300;
-
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  const secretKey = process.env.TURNSTILE_SECRET_KEY;
-  // Bypass in development/test if not configured or using test tokens
-  if (!secretKey || token.startsWith('test-token-') || token === '1x00000000000000000000AA') {
-    return true;
-  }
-
-  try {
-    const formData = new FormData();
-    formData.append('secret', secretKey);
-    formData.append('response', token);
-    formData.append('remoteip', ip);
-
-    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body: formData,
-    });
-    const result = await res.json();
-    return !!result.success;
-  } catch {
-    return false;
-  }
-}
 
 function genericMismatchError() {
   return NextResponse.json(
@@ -66,8 +43,8 @@ export async function POST(request: NextRequest) {
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   const ipHash = hashIp(ip);
 
-  // 1. IP Rate Limiting: 10 attempts per minute per IP
-  const ipRate = checkRateLimit(`track-ip:${ipHash}`, 10, 60 * 1000);
+  // 1. IP Rate Limiting: 10 attempts per minute per IP (Blueprint §8.4)
+  const ipRate = checkPolicyRateLimit('trackIp', ipHash);
   if (!ipRate.allowed) {
     return NextResponse.json(
       {
@@ -127,8 +104,8 @@ export async function POST(request: NextRequest) {
 
   const { publicId, phone, turnstileToken } = parsed.data;
 
-  // 3. Per-Order ID Rate Limiting: 5 attempts per 10 minutes per public ID
-  const orderRate = checkRateLimit(`track-order:${publicId}`, 5, 10 * 60 * 1000);
+  // 3. Per-Order ID Rate Limiting: 5 attempts per 10 minutes per public ID (Blueprint §8.4)
+  const orderRate = checkPolicyRateLimit('trackOrder', publicId);
   if (!orderRate.allowed) {
     return finish(
       NextResponse.json(

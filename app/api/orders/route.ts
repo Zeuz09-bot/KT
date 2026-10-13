@@ -11,7 +11,9 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { checkRateLimit } from '@/lib/rateLimit';
+import { checkPolicyRateLimit } from '@/lib/rateLimit';
+import { verifyTurnstile } from '@/lib/turnstile';
+import { isBlocked } from '@/modules/security/blocklist';
 import { hashIp } from '@/lib/logger';
 import { signHandoffToken } from '@/lib/handoffToken';
 import {
@@ -26,37 +28,13 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  const secretKey = process.env.TURNSTILE_SECRET_KEY;
-  // Bypass in development/test if not configured or using test tokens
-  if (!secretKey || token.startsWith('test-token-') || token === '1x00000000000000000000AA') {
-    return true;
-  }
-
-  try {
-    const formData = new FormData();
-    formData.append('secret', secretKey);
-    formData.append('response', token);
-    formData.append('remoteip', ip);
-
-    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body: formData,
-    });
-    const result = await res.json();
-    return !!result.success;
-  } catch {
-    return false;
-  }
-}
-
 export async function POST(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   const ipHash = hashIp(ip);
 
-  // 1. Rate limiting: 5 orders per hour per IP
-  const rateResult = checkRateLimit(`orders-ip:${ipHash}`, 5, 60 * 60 * 1000);
+  // 1. Rate limiting: 5 orders per hour per IP (Blueprint §8.3, §10.3)
+  const rateResult = checkPolicyRateLimit('orders', ipHash);
   if (!rateResult.allowed) {
     return NextResponse.json(
       {
@@ -99,7 +77,7 @@ export async function POST(request: NextRequest) {
 
   const orderInput = parseResult.data;
 
-  // 3. Turnstile verification
+  // 3. Turnstile verification (fail-closed in production)
   const captchaValid = await verifyTurnstile(orderInput.turnstileToken, ip);
   if (!captchaValid) {
     return NextResponse.json(
@@ -116,7 +94,25 @@ export async function POST(request: NextRequest) {
 
   const supabaseAdmin = createAdminClient();
 
-  // 4. Phone limit: max 5 open NEW orders per phone
+  // 4. Blocklist enforcement (§7.2, §10.3 U15)
+  const blockCheck = await isBlocked(supabaseAdmin, {
+    phone: orderInput.customer.phone,
+    ipHash,
+  });
+  if (blockCheck.blocked) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: {
+          code: 'BLOCKED',
+          message: 'Unable to process order. Please contact customer support on WhatsApp.',
+        },
+      },
+      { status: 403 },
+    );
+  }
+
+  // 5. Phone limit: max 5 open NEW orders per phone
   const { count: openOrdersCount } = await supabaseAdmin
     .from('orders')
     .select('id', { count: 'exact', head: true })

@@ -5,7 +5,7 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { checkRateLimit } from '@/lib/rateLimit';
+import { checkPolicyRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
   // Rate limit: 30/min per IP
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  const rateLimitResult = checkRateLimit(`search:${ip}`, 30, 60 * 1000);
+  const rateLimitResult = checkPolicyRateLimit('search', ip);
   if (!rateLimitResult.allowed) {
     return NextResponse.json(
       { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many requests' } },
