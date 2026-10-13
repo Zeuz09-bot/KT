@@ -81,8 +81,13 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/catalogue" className="hover:text-brand-blue transition-colors">
+                <Link href="/shop" className="hover:text-brand-blue transition-colors">
                   All Gadgets
+                </Link>
+              </li>
+              <li>
+                <Link href="/how-to-order" className="hover:text-brand-blue transition-colors">
+                  How to Order
                 </Link>
               </li>
               <li>
@@ -108,38 +113,57 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Store Policies</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/policies/delivery" className="hover:text-brand-blue transition-colors">
+                <Link href="/delivery" className="hover:text-brand-blue transition-colors">
                   Delivery & Pickup
                 </Link>
               </li>
               <li>
-                <Link href="/policies/payment" className="hover:text-brand-blue transition-colors">
-                  Payment Verification
+                <Link href="/warranty" className="hover:text-brand-blue transition-colors">
+                  Warranty & Returns
                 </Link>
               </li>
               <li>
-                <Link href="/policies/warranty" className="hover:text-brand-blue transition-colors">
-                  Warranty & Return Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/policies/privacy" className="hover:text-brand-blue transition-colors">
+                <Link href="/privacy" className="hover:text-brand-blue transition-colors">
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-brand-blue transition-colors">
+                  Terms of Service
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Support & Ordering */}
+          {/* Trust & Support */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">How It Works</h4>
-            <p className="text-xs text-neutral-400 mb-3 leading-relaxed">
-              Select your gadget variants, submit your order, and chat directly with us on WhatsApp to finalise delivery or pickup.
-            </p>
+            <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Trust & Support</h4>
+            <ul className="space-y-2 text-sm mb-4">
+              <li>
+                <Link href="/verify-accounts" className="text-brand-whatsapp hover:underline font-semibold flex items-center gap-1">
+                  <span>Verify Our Accounts</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-brand-blue transition-colors">
+                  About Keraunous
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-brand-blue transition-colors">
+                  Contact & Location
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-brand-blue transition-colors">
+                  FAQ & Inquiries
+                </Link>
+              </li>
+            </ul>
             <div className="rounded-card-sm bg-neutral-900/80 p-3 border border-neutral-800">
-              <p className="text-xs font-semibold text-neutral-200">Bank Transfer Notice</p>
+              <p className="text-xs font-semibold text-neutral-200">Anti-Scam Protection</p>
               <p className="text-xs text-neutral-400 mt-1">
-                Payments are verified via in-app credit check before release. We use verified bank accounts (OPay).
+                We accept bank transfers strictly to our official OPay account (8070822409).
               </p>
             </div>
           </div>

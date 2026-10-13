@@ -16,7 +16,7 @@
 | U09 | Wishlist and Order List | DONE | unit/u09-wishlist-order-list | | 231 tests pass; /order-list and /wishlist live; useOrderList & useWishlist hooks with cross-tab sync and storage versioning (krn:list:v1, krn:wish:v1); POST /api/list/resolve (rate-limited, server prices, out-of-stock exclusion, price change banner); POST /api/wishlist/resolve; ProductPurchaseBox with Add to List & toast; live navbar badges; pnpm check exit 0 |
 | U11 | Order management | DONE | unit/u11-order-management | | 292 tests pass; admin order desk (/admin/orders, /admin/orders/[id]); state machine RPC caller with role enforcement; transition modal dialogs (payment, dispatch, imei, cancel); order timeline; WhatsApp templates; CSV export; dashboard stats; pnpm check exit 0 |
 | U12 | Order tracking | DONE | unit/u12-order-tracking | | 306 tests pass; POST /api/track with constant-latency protection (>=300ms), 10/min IP & 5/10min ID rate limits, Turnstile verification, minimal customer projection; public /track page with live stepper timeline, snapshot items, courier waybill info, WhatsApp inquiry action; pnpm check exit 0 |
-| U13 | Trust and policy pages | TODO | | | |
+| U13 | Trust and policy pages | DONE | unit/u13-trust-policies | | 313 tests pass; 9 dedicated trust/policy pages live (/about, /contact, /faq, /how-to-order, /delivery, /warranty, /privacy, /terms, /verify-accounts); anti-impersonation notice with verified OPay account (8070822409) & WhatsApp (+2348070822409); tiered warranties (Brand New 12m, Open Box 90d, UK Used 30d/7d swap); NDPA-aligned privacy notice; updated footer & checkout links; pnpm check exit 0 |
 | U14 | SEO, sharing and analytics | TODO | | | |
 | U15 | Security hardening | TODO | | | |
 | U16 | Notifications | TODO | | | |
