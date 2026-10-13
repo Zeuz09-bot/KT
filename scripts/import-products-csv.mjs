@@ -2,7 +2,7 @@
  * Keraunous Tech Store — CSV Catalogue Importer
  *
  * Imports real product data, brands, categories, variants, and specifications
- * from CSV files into Supabase with integer Naira pricing.
+ * from CSV files into Supabase with integer Naira pricing matching schema types.
  *
  * Usage:
  *   node scripts/import-products-csv.mjs [path-to-csv]
@@ -53,7 +53,6 @@ function parseCSV(content) {
 
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
-    // Handle standard CSV comma splitting (supporting unescaped commas for simplicity)
     const values = [];
     let inQuotes = false;
     let currentValue = '';
@@ -61,7 +60,12 @@ function parseCSV(content) {
     for (let charIndex = 0; charIndex < line.length; charIndex++) {
       const char = line[charIndex];
       if (char === '"') {
-        inQuotes = !inQuotes;
+        if (inQuotes && line[charIndex + 1] === '"') {
+          currentValue += '"';
+          charIndex++;
+        } else {
+          inQuotes = !inQuotes;
+        }
       } else if (char === ',' && !inQuotes) {
         values.push(currentValue.trim());
         currentValue = '';
@@ -108,29 +112,45 @@ async function runImport() {
   for (const row of rows) {
     const brandName = row.brand_name || 'Generic';
     const categoryName = row.category_name || 'Accessories';
-    const title = row.title;
-    const slug = row.slug || slugify(title);
+    const name = row.name || row.title;
+    const slug = row.slug || slugify(name);
+    const shortDescription = row.short_description || '';
     const description = row.description || '';
-    const condition = row.condition || 'Brand New';
-    const variantName = row.variant_name || 'Standard';
-    const sku = row.sku || `${slug}-${slugify(variantName)}`;
+    const sku = row.sku || `${slug}-${slugify(row.color || 'default')}`;
+    const condition = row.condition || 'brand_new';
+    const color = row.color || null;
+    const storageGb = row.storage_gb ? parseInt(row.storage_gb, 10) : null;
+    const ramGb = row.ram_gb ? parseInt(row.ram_gb, 10) : null;
     const priceNgn = Math.round(Number(row.price_ngn));
     const compareAtNgn = row.compare_at_price_ngn ? Math.round(Number(row.compare_at_price_ngn)) : null;
-    const stockQuantity = parseInt(row.stock_quantity || '0', 10);
-    const specsString = row.specs || '';
+    const stockQty = parseInt(row.stock_qty || row.stock_quantity || '0', 10);
+    
+    let specs = {};
+    if (row.specs) {
+      try {
+        specs = JSON.parse(row.specs);
+      } catch {
+        // Fallback for simple key:value; format
+        const pairs = row.specs.split(';').map((s) => s.trim()).filter(Boolean);
+        for (const p of pairs) {
+          const [k, v] = p.split(':').map((s) => s?.trim());
+          if (k && v) specs[k] = v;
+        }
+      }
+    }
 
-    if (!title || isNaN(priceNgn) || priceNgn <= 0) {
-      console.warn(`[IMPORT] Skipping row with invalid title or price:`, row);
+    if (!name || isNaN(priceNgn) || priceNgn <= 0) {
+      console.warn(`[IMPORT] Skipping row with invalid name or price:`, row);
       continue;
     }
 
     // 1. Ensure Brand exists
     const brandSlug = slugify(brandName);
-    let { data: brand } = await supabase.from('brands').select('id').eq('slug', brandSlug).single();
+    let { data: brand } = await supabase.from('brands').select('id').eq('slug', brandSlug).maybeSingle();
     if (!brand) {
       const { data: newBrand, error } = await supabase
         .from('brands')
-        .insert({ name: brandName, slug: brandSlug })
+        .insert({ name: brandName, slug: brandSlug, is_active: true })
         .select('id')
         .single();
       if (error) throw new Error(`Failed to create brand ${brandName}: ${error.message}`);
@@ -139,11 +159,11 @@ async function runImport() {
 
     // 2. Ensure Category exists
     const categorySlug = slugify(categoryName);
-    let { data: category } = await supabase.from('categories').select('id').eq('slug', categorySlug).single();
+    let { data: category } = await supabase.from('categories').select('id').eq('slug', categorySlug).maybeSingle();
     if (!category) {
       const { data: newCat, error } = await supabase
         .from('categories')
-        .insert({ name: categoryName, slug: categorySlug })
+        .insert({ name: categoryName, slug: categorySlug, is_active: true })
         .select('id')
         .single();
       if (error) throw new Error(`Failed to create category ${categoryName}: ${error.message}`);
@@ -151,60 +171,86 @@ async function runImport() {
     }
 
     // 3. Ensure Product exists
-    let { data: product } = await supabase.from('products').select('id').eq('slug', slug).single();
+    let { data: product } = await supabase.from('products').select('id').eq('slug', slug).maybeSingle();
     if (!product) {
+      const searchKey = `${name} ${brandName} ${categoryName}`.toLowerCase();
       const { data: newProd, error } = await supabase
         .from('products')
         .insert({
-          title,
+          name,
           slug,
-          description,
-          condition,
           brand_id: brand.id,
           category_id: category.id,
-          is_published: true,
+          short_description: shortDescription,
+          description,
+          specs,
+          status: 'published',
+          search_key: searchKey,
         })
         .select('id')
         .single();
-      if (error) throw new Error(`Failed to create product ${title}: ${error.message}`);
+      if (error) throw new Error(`Failed to create product ${name}: ${error.message}`);
       product = newProd;
     }
 
-    // 4. Upsert Variant
-    const { error: variantError } = await supabase
+    // 4. Upsert Variant (check by SKU or unique combo)
+    let { data: existingVariant } = await supabase
       .from('product_variants')
-      .upsert({
-        product_id: product.id,
-        name: variantName,
-        sku,
-        price_ngn: priceNgn,
-        compare_at_price_ngn: compareAtNgn,
-        stock_quantity: stockQuantity,
-        is_active: true,
-      }, { onConflict: 'sku' });
+      .select('id')
+      .eq('product_id', product.id)
+      .eq('condition', condition)
+      .match(storageGb !== null ? { storage_gb: storageGb } : {})
+      .match(color !== null ? { color } : {})
+      .maybeSingle();
+
+    if (!existingVariant) {
+      const { data: bySku } = await supabase
+        .from('product_variants')
+        .select('id')
+        .eq('sku', sku)
+        .maybeSingle();
+      if (bySku) existingVariant = bySku;
+    }
+
+    let variantError = null;
+    if (existingVariant) {
+      const { error } = await supabase
+        .from('product_variants')
+        .update({
+          sku,
+          price_ngn: priceNgn,
+          compare_at_price_ngn: compareAtNgn,
+          stock_qty: stockQty,
+          is_active: true,
+          ram_gb: ramGb,
+        })
+        .eq('id', existingVariant.id);
+      variantError = error;
+    } else {
+      const { error } = await supabase
+        .from('product_variants')
+        .insert({
+          product_id: product.id,
+          sku,
+          condition,
+          color,
+          storage_gb: storageGb,
+          ram_gb: ramGb,
+          price_ngn: priceNgn,
+          compare_at_price_ngn: compareAtNgn,
+          stock_qty: stockQty,
+          is_active: true,
+        });
+      variantError = error;
+    }
 
     if (variantError) {
-      console.error(`[IMPORT] Failed to upsert variant ${sku}:`, variantError.message);
+      console.error(`[IMPORT] Failed to save variant ${sku}:`, variantError.message);
       continue;
     }
 
-    // 5. Insert Specs if provided
-    if (specsString) {
-      const specPairs = specsString.split(';').map((s) => s.trim()).filter(Boolean);
-      for (const pair of specPairs) {
-        const [k, v] = pair.split(':').map((item) => item?.trim());
-        if (k && v) {
-          await supabase.from('product_specs').upsert({
-            product_id: product.id,
-            spec_key: k,
-            spec_value: v,
-          }, { onConflict: 'product_id,spec_key' }).catch(() => {});
-        }
-      }
-    }
-
     importedVariantsCount++;
-    console.log(`[IMPORT] ✓ Successfully processed: ${title} — ${variantName} (₦${priceNgn.toLocaleString('en-NG')}, Stock: ${stockQuantity})`);
+    console.log(`[IMPORT] ✓ Successfully processed: ${name} — SKU: ${sku} (₦${priceNgn.toLocaleString('en-NG')}, Stock: ${stockQty})`);
   }
 
   console.log(`\n[IMPORT] Done! Successfully imported/updated ${importedVariantsCount} variant(s).`);
