@@ -14,7 +14,7 @@
 | U07 | Public catalogue pages | DONE | unit/u07-public-catalogue | | Home page with hero carousel, trust bar, product sections; listing pages (shop, category, brand, deals, new-arrivals, best-sellers); product detail with gallery, variant selector, spec chips; storefront components; error/not-found pages; 187 tests pass, build succeeds
 | U08 | Search and filters | DONE | unit/u08-search-filters | | 197 tests pass; GET /api/search (rate-limited, normalised, edge-cached); SearchBar with keyboard nav, recent-searches history, WhatsApp fallback; FilterSidebar (desktop) + FilterBottomSheet (mobile); all state URL-driven; PaginationNav wrapper; noindex on filtered URLs; pnpm check exit 0 |
 | U09 | Wishlist and Order List | DONE | unit/u09-wishlist-order-list | | 231 tests pass; /order-list and /wishlist live; useOrderList & useWishlist hooks with cross-tab sync and storage versioning (krn:list:v1, krn:wish:v1); POST /api/list/resolve (rate-limited, server prices, out-of-stock exclusion, price change banner); POST /api/wishlist/resolve; ProductPurchaseBox with Add to List & toast; live navbar badges; pnpm check exit 0 |
-| U10 | Order service and WhatsApp handoff | TODO | | | |
+| U10 | Order service and WhatsApp handoff | DONE | unit/u10-order-service | | 258 tests pass; tamper-resistant POST /api/orders; Turnstile & rate limiting; create_order RPC; handoff HMAC token; WhatsApp message builder with overflow note; QuickOrderSheet & CustomerOrderForm; /order/sent handoff view; pnpm check exit 0 |
 | U11 | Order management | TODO | | | |
 | U12 | Order tracking | TODO | | | |
 | U13 | Trust and policy pages | TODO | | | |
