@@ -1,0 +1,6 @@
+brand_name,category_name,title,slug,description,condition,variant_name,sku,price_ngn,compare_at_price_ngn,stock_quantity,specs
+Apple,Smartphones,iPhone 15 Pro Max,iphone-15-pro-max,Titanium design with A17 Pro chip and 48MP camera system.,Brand New,256GB - Natural Titanium,IP15PM-256-NAT,1850000,1950000,12,Storage:256GB;Display:6.7-inch OLED;Battery:4422 mAh
+Apple,Smartphones,iPhone 15 Pro Max,iphone-15-pro-max,Titanium design with A17 Pro chip and 48MP camera system.,Brand New,512GB - Black Titanium,IP15PM-512-BLK,2150000,2250000,8,Storage:512GB;Display:6.7-inch OLED;Battery:4422 mAh
+Samsung,Smartphones,Galaxy S24 Ultra,samsung-galaxy-s24-ultra,Galaxy AI with Snapdragon 8 Gen 3 and titanium frame with built-in S Pen.,Brand New,256GB - Titanium Gray,S24U-256-GRY,1750000,1850000,15,Storage:256GB;Display:6.8-inch Dynamic AMOLED 2X;RAM:12GB
+Samsung,Smartphones,Galaxy S24 Ultra,samsung-galaxy-s24-ultra,Galaxy AI with Snapdragon 8 Gen 3 and titanium frame with built-in S Pen.,Brand New,512GB - Titanium Black,S24U-512-BLK,2050000,2150000,6,Storage:512GB;Display:6.8-inch Dynamic AMOLED 2X;RAM:12GB
+Google,Smartphones,Pixel 8 Pro,pixel-8-pro,Google Tensor G3 with advanced computational photography and Actua display.,Brand New,128GB - Obsidian,P8P-128-OBS,1200000,1300000,10,Storage:128GB;Display:6.7-inch LTPO OLED;RAM:12GB

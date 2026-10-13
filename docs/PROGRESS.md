@@ -20,7 +20,7 @@
 | U14 | SEO, sharing and analytics | DONE | unit/u14-seo-analytics | | 321 tests pass; dynamic sitemap (/sitemap.xml) & robots (/robots.txt); dynamic product OG preview card for WhatsApp (/api/og/product); JSON-LD schemas (Product with NGN currency and zero fake ratings, LocalBusiness, Breadcrumbs); privacy-safe client analytics tracker; UTM attribution on orders; Search Console & Google Business guide; pnpm check exit 0 |
 | U15 | Security hardening | DONE | unit/u15-security-hardening | | 343 tests pass; strict CSP (frame-ancestors 'none'), HSTS, nosniff, permissions policy; centralized rate limits (orders, handoff, track, search, resolve, login); fail-closed Turnstile; blocklist enforcement (403 BLOCKED); owner alerts recorded (whatsapp change, staff invite, repeated failed logins); log redaction (masked phones, hashed IPs, secret redaction); 1,000 orders & 500 track requests abuse throttle test verified; pnpm check exit 0 |
 | U16 | Notifications | DONE | unit/u16-notifications | | 359 tests pass; Telegram bot integration with logger fallback; privacy-compliant new_order alerts (strictly zero phone/address in notifications); non-blocking fire-and-forget execution (notification failure never fails an order); scheduled monitoring endpoints (/api/cron/notifications, /api/cron/daily-summary) protected by CRON_SECRET; uncontacted orders >30m, low stock, and owner alerts monitoring; pnpm check exit 0 |
-| U17 | QA, observability, backups, launch | TODO | | | |
+| U17 | QA, observability, backups, launch | DONE | unit/u17-qa-launch | | 359 unit tests pass; enhanced /api/health with DB ping & latency; 5 Playwright E2E suites (E1, E2, E8, E11, E12); 5 k6 load testing scripts & report (Blueprint §13.3); docs/OBSERVABILITY.md; docs/RUNBOOKS.md (6 operational incidents); scripts/backup-db.mjs; scripts/import-products-csv.mjs; docs/LAUNCH_CHECKLIST.md; pnpm check exit 0 |
 
 ## Decisions
 - 2026-10-06: Store Name: "Keraunous Tech Store" (also referenced as Keraunos Tech).
@@ -63,6 +63,8 @@
 - @testing-library/user-event@14.6.7 (dev) — User event simulator for testing
 - @testing-library/jest-dom@7.0.1 (dev) — DOM assertions for vitest
 - jsdom@30.1.2 (dev) — DOM environment for vitest
+- @playwright/test@1.49.1 (dev) — End-to-end browser test framework per Blueprint §14
+
 
 ## Manual steps pending (human)
 - [ ] Create Supabase Dev project (for U02) and obtain project URL & keys. ✅ DONE 2026-10-07

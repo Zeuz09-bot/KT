@@ -4,6 +4,8 @@ import path from 'path';
 export default defineConfig({
   test: {
     globals: true,
+    include: ['tests/unit/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['**/node_modules/**', '**/tests/e2e/**'],
     environmentMatchGlobs: [
       ['tests/unit/**/*.test.tsx', 'jsdom'],
       ['tests/unit/**/*.test.ts', 'node'],
