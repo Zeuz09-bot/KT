@@ -6,10 +6,9 @@ import { getProductBySlug, getRelatedProducts } from '@/modules/catalog';
 import { ProductGallery } from '@/components/storefront/product-gallery';
 import { SpecChips } from '@/components/storefront/spec-chips';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Heart, MessageSquare } from 'lucide-react';
+import { ProductPurchaseBox } from '@/components/storefront/product-purchase-box';
 import { notFound } from 'next/navigation';
-import { resolveVariant, formatWarranty } from '@/lib/contracts/catalog';
+import { resolveVariant } from '@/lib/contracts/catalog';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -31,9 +30,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   // Get default variant (cheapest in stock)
   const defaultVariant = resolveVariant(product.variants, {});
-  const price = defaultVariant?.sale_price_ngn ?? defaultVariant?.price_ngn ?? 0;
-  const oldPrice = defaultVariant?.sale_price_ngn ? defaultVariant?.price_ngn : defaultVariant?.compare_at_price_ngn;
-  const stock = defaultVariant?.stock_qty ?? 0;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -63,47 +59,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p className="text-muted-foreground">{product.shortDescription}</p>
           )}
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold">
-              ₦{price?.toLocaleString()}
-            </span>
-            {oldPrice && oldPrice > price && (
-              <span className="text-lg text-muted-foreground line-through">
-                ₦{oldPrice.toLocaleString()}
-              </span>
-            )}
-          </div>
-
-          {/* Stock */}
-          {stock > 0 ? (
-            <p className="text-sm text-green-600">
-              In stock ({stock} available)
-            </p>
-          ) : (
-            <p className="text-sm text-red-600">Out of stock</p>
-          )}
-
-          {/* Warranty */}
-          {defaultVariant && (
-            <p className="text-xs text-muted-foreground">
-              {formatWarranty(defaultVariant.condition, defaultVariant.warranty_months)}
-            </p>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            <Button size="lg" variant="whatsapp" className="flex-1" disabled={stock === 0}>
-              Order on WhatsApp
-            </Button>
-            <Button size="lg" variant="secondary">
-              <Heart className="h-5 w-5 mr-2" />
-              Add to List
-            </Button>
-            <Button size="lg" variant="icon">
-              <MessageSquare className="h-5 w-5" />
-            </Button>
-          </div>
+          {/* Purchase Box: Variant selector, live price, Add to List, Order on WhatsApp, Wishlist */}
+          <ProductPurchaseBox
+            productId={product.id}
+            productName={product.name}
+            variants={product.variants}
+            initialVariant={defaultVariant}
+          />
 
           {/* Spec Chips */}
           <SpecChips specs={product.specs} />

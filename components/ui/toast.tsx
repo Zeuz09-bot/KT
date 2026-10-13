@@ -58,7 +58,7 @@ const icons: Record<ToastVariant, React.ReactNode> = {
 };
 
 /* ── Toaster (provider + renderer) ──────────────────────── */
-export function Toaster({ children }: { children: React.ReactNode }) {
+export function Toaster({ children }: { children?: React.ReactNode }) {
   const [toasts, setToasts] = React.useState<ToastMessage[]>([]);
 
   const push = React.useCallback((msg: Omit<ToastMessage, 'id'>) => {

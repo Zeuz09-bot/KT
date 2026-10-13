@@ -13,6 +13,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Heart, ClipboardList, Menu, X, Phone } from 'lucide-react';
 import { SearchBar } from './search';
+import { useOrderList } from '@/lib/hooks/use-order-list';
+import { useWishlist } from '@/lib/hooks/use-wishlist';
 
 export interface NavbarProps {
   orderListCount?: number;
@@ -30,6 +32,11 @@ const navLinks = [
 
 export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { count: liveOrderCount, isHydrated: orderHydrated } = useOrderList();
+  const { count: liveWishCount, isHydrated: wishHydrated } = useWishlist();
+
+  const effectiveOrderCount = orderHydrated ? liveOrderCount : orderListCount;
+  const effectiveWishCount = wishHydrated ? liveWishCount : wishlistCount;
 
   return (
     <header className="sticky top-0 z-30 border-b border-neutral-200 bg-neutral-0 shadow-sm">
@@ -80,13 +87,13 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
             {/* Wishlist */}
             <Link
               href="/wishlist"
-              aria-label={`Wishlist${wishlistCount > 0 ? ` (${wishlistCount} items)` : ''}`}
+              aria-label={`Wishlist${effectiveWishCount > 0 ? ` (${effectiveWishCount} items)` : ''}`}
               className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-neutral-600 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-blue"
             >
               <Heart size={20} aria-hidden="true" />
-              {wishlistCount > 0 && (
+              {effectiveWishCount > 0 && (
                 <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-danger text-[10px] font-bold text-white">
-                  {wishlistCount > 9 ? '9+' : wishlistCount}
+                  {effectiveWishCount > 9 ? '9+' : effectiveWishCount}
                 </span>
               )}
             </Link>
@@ -94,13 +101,13 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
             {/* Order List */}
             <Link
               href="/order-list"
-              aria-label={`Order List${orderListCount > 0 ? ` (${orderListCount} items)` : ''}`}
+              aria-label={`Order List${effectiveOrderCount > 0 ? ` (${effectiveOrderCount} items)` : ''}`}
               className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-neutral-600 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-blue"
             >
               <ClipboardList size={20} aria-hidden="true" />
-              {orderListCount > 0 && (
+              {effectiveOrderCount > 0 && (
                 <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-blue text-[10px] font-bold text-white">
-                  {orderListCount > 9 ? '9+' : orderListCount}
+                  {effectiveOrderCount > 9 ? '9+' : effectiveOrderCount}
                 </span>
               )}
             </Link>

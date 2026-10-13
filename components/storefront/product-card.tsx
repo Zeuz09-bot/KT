@@ -17,8 +17,10 @@ import { cn } from '@/lib/cn';
 import { PriceTag } from '@/components/ui/price-tag';
 import { Badge } from '@/components/ui/badge';
 import { StockBadge } from '@/components/ui/stock-badge';
+import { useWishlist } from '@/lib/hooks/use-wishlist';
 
 export interface ProductCardProps {
+  id?: string;
   slug: string;
   name: string;
   imageUrl: string;
@@ -28,13 +30,14 @@ export interface ProductCardProps {
   stock: number;
   badge?: 'new' | 'bestseller';
   isWishlisted?: boolean;
-  onWishlistToggle?: (slug: string) => void;
+  onWishlistToggle?: (idOrSlug: string) => void;
   /** Pre-built wa.me URL — set by the server, never from client input */
   whatsappUrl?: string;
   className?: string;
 }
 
 export function ProductCard({
+  id,
   slug,
   name,
   imageUrl,
@@ -48,7 +51,9 @@ export function ProductCard({
   whatsappUrl,
   className,
 }: ProductCardProps) {
+  const { has, toggle } = useWishlist();
   const isSoldOut = stock <= 0;
+  const isSaved = onWishlistToggle ? isWishlisted : (id ? has(id) : has(slug));
 
   return (
     <article
@@ -85,11 +90,16 @@ export function ProductCard({
         {/* Wishlist heart */}
         <button
           type="button"
-          aria-label={isWishlisted ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`}
-          aria-pressed={isWishlisted}
+          aria-label={isSaved ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`}
+          aria-pressed={isSaved}
           onClick={(e) => {
             e.preventDefault();
-            onWishlistToggle?.(slug);
+            e.stopPropagation();
+            if (onWishlistToggle) {
+              onWishlistToggle(id ?? slug);
+            } else {
+              toggle(id ?? slug);
+            }
           }}
           className={cn(
             'absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-0/80 backdrop-blur-sm',
@@ -101,7 +111,7 @@ export function ProductCard({
             aria-hidden="true"
             className={cn(
               'transition-colors',
-              isWishlisted ? 'fill-brand-danger text-brand-danger' : 'text-neutral-400',
+              isSaved ? 'fill-brand-danger text-brand-danger' : 'text-neutral-400',
             )}
           />
         </button>
