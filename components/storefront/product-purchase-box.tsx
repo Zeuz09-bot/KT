@@ -17,6 +17,7 @@ import { useWishlist } from '@/lib/hooks/use-wishlist';
 import { useToast } from '@/components/ui/toast';
 import { formatNgn } from '@/lib/money';
 import { formatWarranty, type StorefrontVariant } from '@/lib/contracts/catalog';
+import { trackEvent } from '@/lib/analytics/tracker';
 
 interface ProductPurchaseBoxProps {
   productId: string;
@@ -59,6 +60,11 @@ export function ProductPurchaseBox({
     }
 
     addToList(variant.id);
+    trackEvent('add_to_list', {
+      productId,
+      variantId: variant.id,
+      priceNgn: variant.price_ngn,
+    });
     toast({
       title: 'Added to Order List',
       description: `${productName} added to your order list.`,
@@ -68,6 +74,9 @@ export function ProductPurchaseBox({
 
   const handleToggleWishlist = () => {
     const isNowSaved = toggleWishlist(productId);
+    if (isNowSaved) {
+      trackEvent('wishlist_add', { productId, productName });
+    }
     toast({
       title: isNowSaved ? 'Saved to Wishlist' : 'Removed from Wishlist',
       description: isNowSaved

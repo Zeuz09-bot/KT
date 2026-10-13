@@ -21,6 +21,7 @@ import { Modal, ModalContent } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
 import { Send, AlertTriangle } from 'lucide-react';
+import { getStoredUtmParams, trackEvent } from '@/lib/analytics/tracker';
 
 interface QuickOrderSheetProps {
   open: boolean;
@@ -88,6 +89,7 @@ export function QuickOrderSheet({
         },
       ],
       expectedTotalNgn: price,
+      utm: (getStoredUtmParams() || undefined) as Record<string, string> | undefined,
     };
 
     const validation = CreateOrderRequestSchema.safeParse(payloadInput);
@@ -117,6 +119,13 @@ export function QuickOrderSheet({
       if (!res.ok) {
         throw new Error(json.error?.message || 'Could not place order');
       }
+
+      // Track order_created event (zero PII)
+      trackEvent('order_created', {
+        publicId: json.data?.publicId,
+        totalNgn: json.data?.totalNgn,
+        itemCount: 1,
+      });
 
       sessionStorage.setItem('krn:last_order', JSON.stringify(json.data));
       onOpenChange(false);

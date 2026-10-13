@@ -22,6 +22,7 @@ import { formatNgn } from '@/lib/money';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
 import { useOrderList } from '@/lib/hooks/use-order-list';
+import { trackEvent } from '@/lib/analytics/tracker';
 
 export function OrderSentView() {
   const { toast } = useToast();
@@ -64,6 +65,7 @@ export function OrderSentView() {
 
   const handleOpenWhatsApp = () => {
     if (!order) return;
+    trackEvent('whatsapp_opened', { publicId: order.publicId });
     recordHandoff();
     window.open(order.whatsappUrl, '_blank', 'noopener,noreferrer');
   };

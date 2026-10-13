@@ -19,6 +19,7 @@ import type { ResolvedLine } from '@/lib/contracts/list';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
 import { AlertTriangle, Send } from 'lucide-react';
+import { getStoredUtmParams, trackEvent } from '@/lib/analytics/tracker';
 
 interface CustomerOrderFormProps {
   lines: ResolvedLine[];
@@ -87,6 +88,7 @@ export function CustomerOrderForm({
         expectedUnitPriceNgn: line.unitPriceNgn,
       })),
       expectedTotalNgn: subtotalNgn,
+      utm: (getStoredUtmParams() || undefined) as Record<string, string> | undefined,
     };
 
     // Validate with Zod
@@ -134,6 +136,13 @@ export function CustomerOrderForm({
 
         throw new Error(json.error?.message || 'Order submission failed');
       }
+
+      // Track order_created event (zero PII)
+      trackEvent('order_created', {
+        publicId: json.data?.publicId,
+        totalNgn: json.data?.totalNgn,
+        itemCount: json.data?.items?.length,
+      });
 
       // Success: Save order data in sessionStorage and navigate to /order/sent
       sessionStorage.setItem('krn:last_order', JSON.stringify(json.data));

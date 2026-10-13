@@ -11,6 +11,7 @@ import { useCallback, useState, useTransition } from 'react';
 import { SlidersHorizontal, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { trackEvent } from '@/lib/analytics/tracker';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -63,6 +64,9 @@ function FilterContent({
 
   const update = useCallback(
     (key: string, value: string) => {
+      if (value) {
+        trackEvent('filter_used', { filterKey: key, filterValue: value });
+      }
       const next = new URLSearchParams(params.toString());
       if (value) {
         next.set(key, value);

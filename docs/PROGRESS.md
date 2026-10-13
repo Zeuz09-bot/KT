@@ -17,7 +17,7 @@
 | U11 | Order management | DONE | unit/u11-order-management | | 292 tests pass; admin order desk (/admin/orders, /admin/orders/[id]); state machine RPC caller with role enforcement; transition modal dialogs (payment, dispatch, imei, cancel); order timeline; WhatsApp templates; CSV export; dashboard stats; pnpm check exit 0 |
 | U12 | Order tracking | DONE | unit/u12-order-tracking | | 306 tests pass; POST /api/track with constant-latency protection (>=300ms), 10/min IP & 5/10min ID rate limits, Turnstile verification, minimal customer projection; public /track page with live stepper timeline, snapshot items, courier waybill info, WhatsApp inquiry action; pnpm check exit 0 |
 | U13 | Trust and policy pages | DONE | unit/u13-trust-policies | | 313 tests pass; 9 dedicated trust/policy pages live (/about, /contact, /faq, /how-to-order, /delivery, /warranty, /privacy, /terms, /verify-accounts); anti-impersonation notice with verified OPay account (8070822409) & WhatsApp (+2348070822409); tiered warranties (Brand New 12m, Open Box 90d, UK Used 30d/7d swap); NDPA-aligned privacy notice; updated footer & checkout links; pnpm check exit 0 |
-| U14 | SEO, sharing and analytics | TODO | | | |
+| U14 | SEO, sharing and analytics | DONE | unit/u14-seo-analytics | | 321 tests pass; dynamic sitemap (/sitemap.xml) & robots (/robots.txt); dynamic product OG preview card for WhatsApp (/api/og/product); JSON-LD schemas (Product with NGN currency and zero fake ratings, LocalBusiness, Breadcrumbs); privacy-safe client analytics tracker; UTM attribution on orders; Search Console & Google Business guide; pnpm check exit 0 |
 | U15 | Security hardening | TODO | | | |
 | U16 | Notifications | TODO | | | |
 | U17 | QA, observability, backups, launch | TODO | | | |

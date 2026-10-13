@@ -23,6 +23,7 @@ import { TrackOrderForm } from '@/components/storefront/track-order-form';
 import { TrackTimeline } from '@/components/storefront/track-timeline';
 import { buildOrderInquiryUrl } from '@/modules/whatsapp';
 import type { TrackOrderResponseData } from '@/lib/contracts/track';
+import { trackEvent } from '@/lib/analytics/tracker';
 
 interface TrackOrderViewProps {
   initialPublicId?: string;
@@ -39,6 +40,7 @@ export function TrackOrderView({
   const [copied, setCopied] = useState(false);
 
   async function handleLookup(publicId: string, phone: string, turnstileToken: string) {
+    trackEvent('track_lookup', { publicId });
     setIsLoading(true);
     setErrorMessage(null);
 

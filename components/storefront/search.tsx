@@ -10,6 +10,7 @@ import { Search as SearchIcon, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { formatNgn } from '@/lib/money';
+import { trackEvent } from '@/lib/analytics/tracker';
 
 interface SearchSuggestion {
   id: string;
@@ -80,6 +81,7 @@ export function SearchBar() {
   const saveAndNavigate = useCallback(
     (searchQuery: string) => {
       if (!searchQuery.trim()) return;
+      trackEvent('search', { query: searchQuery.trim() });
       const updated = [
         searchQuery,
         ...recentSearches.filter((s) => s !== searchQuery),
