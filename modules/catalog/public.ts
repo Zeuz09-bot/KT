@@ -5,7 +5,8 @@
  */
 import { SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@/lib/database.types';
-import { listProductCards, getProductBySlug, listBrands, listCategories, type ProductCardView, type ProductDetail } from './repo';
+import { getProductBySlug, listProductCards, listBrands, listCategories, type ProductCardView, type ProductDetail } from './repo';
+import { DEFAULT_TRUST_BAR, type TrustBarItem } from '@/modules/content/repo';
 
 export type { ProductCardView, ProductDetail };
 
@@ -28,13 +29,13 @@ export interface ListingOptions {
  */
 export async function getHomeData(supabase: SupabaseClient<Database>) {
   const [
-    banners,
+    bannersRes,
     featuredProducts,
     popularProducts,
     deals,
     brands,
-    campaign,
-    trustBar,
+    campaignRes,
+    trustBarRes,
   ] = await Promise.all([
     // Active hero banners
     supabase
@@ -42,21 +43,21 @@ export async function getHomeData(supabase: SupabaseClient<Database>) {
       .select('*')
       .eq('type', 'hero')
       .eq('is_active', true)
-      .order('sort_order', { ascending: true }),
+      .order('sort_order', { ascending: true })
+      .then((res) => res.data ?? [])
+      .catch(() => []),
 
     // Featured products (up to 4)
-    listProductCards(supabase, { isFeatured: true, limit: 4 }),
+    listProductCards(supabase, { isFeatured: true, limit: 4 }).catch(() => []),
 
-    // Popular smartphones (featured, category = smartphones, up to 4)
-    // Note: We'll filter by category after fetching since category_slug filter is on the view
-    listProductCards(supabase, { limit: 8 }),
+    // Popular products (up to 8)
+    listProductCards(supabase, { limit: 8 }).catch(() => []),
 
-    // Best deals (products with active sale, up to 4)
-    // The view should include effective_price and sale info
-    listProductCards(supabase, { limit: 8 }),
+    // Best deals (up to 8)
+    listProductCards(supabase, { limit: 8 }).catch(() => []),
 
     // Active brands (up to 6)
-    listBrands(supabase),
+    listBrands(supabase).catch(() => []),
 
     // Active flash sale campaign
     supabase
@@ -64,31 +65,37 @@ export async function getHomeData(supabase: SupabaseClient<Database>) {
       .select('*')
       .eq('is_active', true)
       .gt('ends_at', new Date().toISOString())
-      .maybeSingle(),
+      .maybeSingle()
+      .then((res) => res.data ?? null)
+      .catch(() => null),
 
-    // Trust bar from site_settings
+    // Trust bar from site_settings (key = 'trust_bar')
     supabase
       .from('site_settings')
-      .select('trust_bar')
-      .eq('id', 'default')
-      .single(),
+      .select('value')
+      .eq('key', 'trust_bar')
+      .maybeSingle()
+      .then((res) => {
+        const val = res.data?.value;
+        if (Array.isArray(val) && val.length > 0) {
+          return val as unknown as TrustBarItem[];
+        }
+        return DEFAULT_TRUST_BAR;
+      })
+      .catch(() => DEFAULT_TRUST_BAR),
   ]);
 
-  // Filter popular products to smartphones category if needed
-  // (For now, we'll just use the first 4 from the featured list as "popular")
   const popularSmartphones = popularProducts.slice(0, 4);
-
-  // Filter deals to only those with sale price < regular price
   const bestDeals = deals.filter((p: any) => p.on_sale).slice(0, 4);
 
   return {
-    banners: banners.data ?? [],
+    banners: bannersRes,
     featuredProducts,
     popularSmartphones,
     bestDeals,
     brands: brands.slice(0, 6),
-    campaign: campaign.data,
-    trustBar: trustBar.data?.trust_bar ?? null,
+    campaign: campaignRes,
+    trustBar: trustBarRes,
   };
 }
 
