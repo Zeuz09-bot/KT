@@ -57,7 +57,7 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 sm:px-6">
           {/* Logo */}
           <Link href="/" className="flex shrink-0 items-center group py-1" aria-label="Keraunos Tech Store — Home">
-            <KeraunosLogo size="sm" variant="auto" />
+            <KeraunosLogo size="sm" variant="primary" />
           </Link>
 
           {/* Desktop nav links */}

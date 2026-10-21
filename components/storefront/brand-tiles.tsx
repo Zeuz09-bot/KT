@@ -18,18 +18,21 @@ interface BrandTilesProps {
   brands: Brand[];
 }
 
+const DEFAULT_BRANDS: Brand[] = [
+  { id: '20000000-0000-0000-0000-000000000001', name: 'Apple', slug: 'apple', logo_path: null, sort_order: 1 },
+  { id: '20000000-0000-0000-0000-000000000002', name: 'Samsung', slug: 'samsung', logo_path: null, sort_order: 2 },
+  { id: '20000000-0000-0000-0000-000000000003', name: 'Google', slug: 'google', logo_path: null, sort_order: 3 },
+  { id: '20000000-0000-0000-0000-000000000004', name: 'OnePlus', slug: 'oneplus', logo_path: null, sort_order: 4 },
+  { id: '20000000-0000-0000-0000-000000000005', name: 'Xiaomi', slug: 'xiaomi', logo_path: null, sort_order: 5 },
+  { id: '20000000-0000-0000-0000-000000000006', name: 'Infinix', slug: 'infinix', logo_path: null, sort_order: 6 },
+];
+
 export function BrandTiles({ brands }: BrandTilesProps) {
-  if (!brands || brands.length === 0) {
-    return (
-      <div className="text-center py-8 text-brand-charcoal/60">
-        No brands available
-      </div>
-    );
-  }
+  const displayBrands = brands && brands.length > 0 ? brands : DEFAULT_BRANDS;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-      {brands.map((brand) => (
+      {displayBrands.map((brand) => (
         <Link
           key={brand.id}
           href={`/brand/${brand.slug}`}

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { logoutAction } from '@/modules/auth/actions';
 import { Badge } from '@/components/ui/badge';
+import { KeraunosLogo } from '@/components/ui/keraunos-logo';
 import type { AdminUserProfile } from '@/modules/auth/repo';
 
 interface AdminHeaderProps {
@@ -60,13 +61,10 @@ export function AdminHeader({ profile, email }: AdminHeaderProps) {
           <div className="flex items-center gap-8">
             <a
               href="/admin/dashboard"
-              className="flex items-center gap-2 font-bold text-text-primary tracking-tight text-lg"
+              className="flex items-center gap-2.5 font-bold tracking-tight text-lg group"
             >
-              <span className="w-8 h-8 rounded-lg bg-accent-orange text-white flex items-center justify-center font-black">
-                K
-              </span>
-              <span>KERAUNOUS</span>
-              <span className="text-xs px-2 py-0.5 rounded font-mono bg-neutral-100 text-neutral-600 font-normal">
+              <KeraunosLogo size="xs" variant="primary" />
+              <span className="text-[10px] px-2 py-0.5 rounded font-mono bg-neutral-100 text-neutral-600 font-semibold tracking-wider">
                 ADMIN
               </span>
             </a>
