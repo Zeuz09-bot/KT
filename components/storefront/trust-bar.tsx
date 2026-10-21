@@ -2,7 +2,17 @@
  * Trust Bar
  * Displays 4 trust items (icon, title, subtitle) from site settings.
  */
-import { Check, Truck, Shield, HeadphonesIcon } from 'lucide-react';
+import {
+  Check,
+  Truck,
+  ShieldCheck,
+  HeadphonesIcon,
+  MessageCircle,
+  RefreshCw,
+  Phone,
+  Clock,
+  Sparkles,
+} from 'lucide-react';
 
 export interface TrustItem {
   icon: string;
@@ -17,8 +27,20 @@ interface TrustBarProps {
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   check: Check,
   truck: Truck,
-  shield: Shield,
+  delivery: Truck,
+  shield: ShieldCheck,
+  'shield-check': ShieldCheck,
   headphones: HeadphonesIcon,
+  support: HeadphonesIcon,
+  'message-circle': MessageCircle,
+  'message-square': MessageCircle,
+  chat: MessageCircle,
+  whatsapp: MessageCircle,
+  'refresh-cw': RefreshCw,
+  refresh: RefreshCw,
+  phone: Phone,
+  clock: Clock,
+  sparkles: Sparkles,
 };
 
 export function TrustBar({ items }: TrustBarProps) {

@@ -176,3 +176,32 @@ describe('DataTable Component', () => {
     expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
   });
 });
+
+describe('KeraunosLogo Component', () => {
+  it('renders brandmark and wordmark correctly', async () => {
+    const { KeraunosLogo } = await import('@/components/ui/keraunos-logo');
+    render(<KeraunosLogo variant="primary" />);
+    expect(screen.getByText('keraunos')).toBeInTheDocument();
+    expect(screen.getByText('tech')).toBeInTheDocument();
+  });
+
+  it('renders mark-only layout without text', async () => {
+    const { KeraunosLogo } = await import('@/components/ui/keraunos-logo');
+    render(<KeraunosLogo layout="mark-only" data-testid="k-mark" />);
+    expect(screen.queryByText('keraunos')).not.toBeInTheDocument();
+  });
+});
+
+describe('BrandLogoRenderer Component', () => {
+  it('renders vector icons for recognized brands', async () => {
+    const { BrandLogoRenderer } = await import('@/components/ui/brand-icons');
+    render(<BrandLogoRenderer name="Apple" slug="apple" />);
+    expect(screen.getByLabelText('Apple')).toBeInTheDocument();
+
+    render(<BrandLogoRenderer name="Samsung" slug="samsung" />);
+    expect(screen.getByLabelText('Samsung')).toBeInTheDocument();
+
+    render(<BrandLogoRenderer name="Google" slug="google" />);
+    expect(screen.getByLabelText('Google')).toBeInTheDocument();
+  });
+});

@@ -55,6 +55,8 @@ import { ImageUploader, UploadedImage } from '@/components/admin/image-uploader'
 import { DataTable, Column } from '@/components/admin/data-table';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { ShieldCheck, Truck, Clock, RefreshCw, ShoppingBag, Eye } from 'lucide-react';
+import { KeraunosLogo } from '@/components/ui/keraunos-logo';
+import { BrandLogoRenderer } from '@/components/ui/brand-icons';
 
 interface AdminDemoProduct {
   id: string;
@@ -235,6 +237,58 @@ function DevUiShowcase() {
               256GB · Natural Titanium · Grade A+ Battery 100%
             </p>
             <p className="text-xs text-brand-charcoal/50 mt-3">Inter · Neutral & Crisp</p>
+          </div>
+        </div>
+
+        {/* Brandmark Identity Cards (01 / Primary, 02 / Signature, 03 / Luxury) */}
+        <div className="space-y-3 pt-6 border-t border-brand-silver/30">
+          <span className="text-xs font-editorial uppercase tracking-editorial text-brand-navy block">
+            Brand Identity Suite · 3 Finish Executions
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {/* 01 Primary */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#F3EFEA] border border-brand-silver/50 shadow-card">
+              <KeraunosLogo variant="primary" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-charcoal/60 mt-6">
+                01 / Primary
+              </span>
+            </div>
+
+            {/* 02 Signature */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#3B4854] border border-brand-silver/30 shadow-card">
+              <KeraunosLogo variant="signature" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-silver/70 mt-6">
+                02 / Signature
+              </span>
+            </div>
+
+            {/* 03 Luxury */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#18191B] border border-brand-champagne/40 shadow-foil">
+              <KeraunosLogo variant="luxury" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-champagne/80 mt-6">
+                03 / Luxury
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Brand Icons Showcase */}
+        <div className="space-y-3 pt-6 border-t border-brand-silver/30">
+          <span className="text-xs font-editorial uppercase tracking-editorial text-brand-navy block">
+            Authorised Hardware Brand Icons
+          </span>
+          <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
+            {['Apple', 'Samsung', 'Google', 'OnePlus', 'Xiaomi', 'Infinix'].map((b) => (
+              <div
+                key={b}
+                className="flex flex-col items-center justify-center p-4 rounded-card-md bg-brand-white border border-brand-silver/50 text-brand-charcoal shadow-sm gap-2"
+              >
+                <div className="h-10 flex items-center justify-center">
+                  <BrandLogoRenderer name={b} slug={b.toLowerCase()} size={28} />
+                </div>
+                <span className="text-xs font-display font-medium text-brand-charcoal/80">{b}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

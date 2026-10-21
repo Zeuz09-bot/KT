@@ -3,6 +3,7 @@
  */
 import Link from 'next/link';
 import { Phone, MapPin, Clock, ShieldCheck, Truck, MessageCircle } from 'lucide-react';
+import { KeraunosLogo } from '@/components/ui/keraunos-logo';
 
 export function Footer() {
   return (
@@ -56,12 +57,9 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded bg-brand-navy border border-brand-silver/40 text-xs font-display font-bold text-brand-white tracking-widest">
-                KT
-              </span>
-              <h3 className="text-lg font-display font-bold text-brand-white tracking-display">Keraunous Tech Store</h3>
-            </div>
+            <Link href="/" className="inline-block group" aria-label="Keraunos Tech Store — Home">
+              <KeraunosLogo variant="luxury" size="md" />
+            </Link>
             <p className="text-sm text-brand-silver/80 leading-relaxed font-sans">
               Quiet tech luxury. Premium smartphones, tablets, MacBooks and authentic accessories with direct WhatsApp concierge for Nigerian tech enthusiasts.
             </p>

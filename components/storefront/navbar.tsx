@@ -13,6 +13,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Heart, ClipboardList, Menu, X, Phone } from 'lucide-react';
 import { SearchBar } from './search';
+import { KeraunosLogo } from '@/components/ui/keraunos-logo';
 import { useOrderList } from '@/lib/hooks/use-order-list';
 import { useWishlist } from '@/lib/hooks/use-wishlist';
 
@@ -55,13 +56,8 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
       <nav aria-label="Main navigation">
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 sm:px-6">
           {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-2.5 group" aria-label="Keraunous Tech Store — Home">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-navy border border-brand-silver/40 text-xs font-display font-bold text-brand-white tracking-widest shadow-sm group-hover:border-brand-champagne transition-colors">
-              KT
-            </span>
-            <span className="hidden font-display font-bold text-brand-charcoal tracking-display text-base sm:block group-hover:text-brand-navy transition-colors">
-              Keraunous Tech
-            </span>
+          <Link href="/" className="flex shrink-0 items-center group py-1" aria-label="Keraunos Tech Store — Home">
+            <KeraunosLogo size="sm" variant="auto" />
           </Link>
 
           {/* Desktop nav links */}
