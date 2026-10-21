@@ -142,6 +142,24 @@ export async function getListing(
   if (options.search) {
     query = query.ilike('name', `%${options.search}%`);
   }
+  if (options.condition) {
+    try {
+      const { data: variants } = await supabase
+        .from('product_variants')
+        .select('product_id')
+        .eq('condition', options.condition)
+        .eq('is_active', true);
+
+      const productIds = Array.from(new Set((variants || []).map((v) => v.product_id)));
+      if (productIds.length > 0) {
+        query = query.in('id', productIds);
+      } else {
+        query = query.eq('id', '00000000-0000-0000-0000-000000000000');
+      }
+    } catch {
+      // In case of network/offline fallback, continue
+    }
+  }
 
   // Sorting
   switch (options.sort) {

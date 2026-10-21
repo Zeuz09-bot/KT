@@ -25,7 +25,7 @@ export interface NavbarProps {
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Shop', href: '/shop' },
-  { label: 'New Arrivals', href: '/new-arrivals' },
+  { label: 'UK Used', href: '/uk-used' },
   { label: 'Best Sellers', href: '/best-sellers' },
   { label: 'Deals', href: '/deals' },
   { label: 'Contact', href: '/contact' },
