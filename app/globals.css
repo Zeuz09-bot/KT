@@ -2,18 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS custom properties (mirror Tailwind tokens for use in arbitrary CSS) ── */
+/* ── CSS custom properties (Quiet Tech Luxury Design System) ───────────────── */
 :root {
-  --color-brand-blue: #1f5cff;
-  --color-brand-blue-dark: #1649cc;
-  --color-brand-blue-light: #ebf0ff;
-  --color-brand-navy: #0a1240;
-  --color-brand-surface: #f5f7ff;
+  --color-brand-navy: #3b4854;
+  --color-brand-charcoal: #18191b;
+  --color-brand-cream: #f3efea;
+  --color-brand-canvas: #f3efea;
+  --color-brand-silver: #d4d8dd;
+  --color-brand-champagne: #c5b49c;
+  --color-brand-white: #ffffff;
+
+  /* Mappings & Status */
+  --color-brand-blue: #3b4854;
+  --color-brand-blue-dark: #2f3a44;
+  --color-brand-blue-light: #e8ecf0;
+  --color-brand-navy-dark: #18191b;
+  --color-brand-surface: #f3efea;
   --color-brand-whatsapp: #25d366;
+  --color-brand-whatsapp-dark: #1da851;
   --color-brand-danger: #e5484d;
+  --color-brand-success: #16a34a;
+  --color-brand-warning: #f59e0b;
+
   --color-neutral-0: #ffffff;
-  --color-neutral-50: #f8f9fa;
-  --color-neutral-900: #212529;
+  --color-neutral-50: #fbf9f7;
+  --color-neutral-100: #f3efea;
+  --color-neutral-200: #e6e1da;
+  --color-neutral-300: #d4d8dd;
+  --color-neutral-700: #3b4854;
+  --color-neutral-900: #18191b;
 
   --radius-card-sm: 12px;
   --radius-card-md: 16px;
@@ -31,18 +48,25 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    background-color: #f3efea;
   }
 
   body {
-    @apply bg-neutral-50 font-sans text-neutral-900 antialiased;
+    @apply bg-brand-cream font-sans text-brand-charcoal antialiased;
     min-height: 100dvh;
     margin: 0;
     padding: 0;
   }
 
-  /* Focus ring — visible for keyboard users, suppressed on pointer click */
+  /* Quiet Luxury Text Selection */
+  ::selection {
+    background-color: #3b4854;
+    color: #ffffff;
+  }
+
+  /* Focus ring — Slate Navy / Champagne visible indicator */
   :focus-visible {
-    outline: 2px solid var(--color-brand-blue);
+    outline: 2px solid var(--color-brand-navy);
     outline-offset: 2px;
     border-radius: 4px;
   }

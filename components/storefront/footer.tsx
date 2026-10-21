@@ -6,45 +6,45 @@ import { Phone, MapPin, Clock, ShieldCheck, Truck, MessageCircle } from 'lucide-
 
 export function Footer() {
   return (
-    <footer className="bg-brand-navy text-neutral-300 border-t border-neutral-800" role="contentinfo">
-      {/* Trust banner strip */}
-      <div className="border-b border-neutral-800/80 bg-neutral-900/40">
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <footer className="bg-brand-charcoal text-brand-silver/80 border-t border-brand-silver/30 font-sans" role="contentinfo">
+      {/* Trust banner strip — Slate Navy grounding tone */}
+      <div className="border-b border-brand-silver/20 bg-brand-navy py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-full bg-brand-blue/10 text-brand-blue">
-                <Truck className="h-5 w-5" aria-hidden="true" />
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-full bg-brand-cream/15 text-brand-silver border border-brand-silver/30">
+                <Truck className="h-5 w-5 text-brand-champagne" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-neutral-0">Interstate Delivery</p>
-                <p className="text-xs text-neutral-400">Ondo, Lagos, Ibadan, Abuja & more</p>
+                <p className="text-sm font-display font-semibold text-brand-white tracking-display">Interstate Delivery</p>
+                <p className="text-xs text-brand-silver/70">Ondo, Lagos, Ibadan, Abuja & more</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-full bg-brand-blue/10 text-brand-blue">
-                <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-full bg-brand-cream/15 text-brand-silver border border-brand-silver/30">
+                <ShieldCheck className="h-5 w-5 text-brand-champagne" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-neutral-0">Tested & Verified</p>
-                <p className="text-xs text-neutral-400">100% genuine guaranteed devices</p>
+                <p className="text-sm font-display font-semibold text-brand-white tracking-display">Tested & Verified</p>
+                <p className="text-xs text-brand-silver/70">100% genuine guaranteed devices</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-full bg-brand-blue/10 text-brand-blue">
-                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-full bg-brand-cream/15 text-brand-silver border border-brand-silver/30">
+                <MessageCircle className="h-5 w-5 text-brand-champagne" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-neutral-0">Direct WhatsApp Orders</p>
-                <p className="text-xs text-neutral-400">Confirm stock & pay on delivery/transfer</p>
+                <p className="text-sm font-display font-semibold text-brand-white tracking-display">Direct WhatsApp Orders</p>
+                <p className="text-xs text-brand-silver/70">Confirm stock & inspect on delivery</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-full bg-brand-blue/10 text-brand-blue">
-                <Clock className="h-5 w-5" aria-hidden="true" />
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-full bg-brand-cream/15 text-brand-silver border border-brand-silver/30">
+                <Clock className="h-5 w-5 text-brand-champagne" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-neutral-0">24/7 Availability</p>
-                <p className="text-xs text-neutral-400">Always active for your gadget inquiries</p>
+                <p className="text-sm font-display font-semibold text-brand-white tracking-display">24/7 Availability</p>
+                <p className="text-xs text-brand-silver/70">Always active for your gadget inquiries</p>
               </div>
             </div>
           </div>
@@ -56,21 +56,26 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-neutral-0 tracking-tight">Keraunous Tech Store</h3>
-            <p className="text-sm text-neutral-400 leading-relaxed">
-              Premium phones, tablets, laptops and original accessories. Showcase catalogue with verified WhatsApp checkout for Nigerian tech enthusiasts.
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded bg-brand-navy border border-brand-silver/40 text-xs font-display font-bold text-brand-white tracking-widest">
+                KT
+              </span>
+              <h3 className="text-lg font-display font-bold text-brand-white tracking-display">Keraunous Tech Store</h3>
+            </div>
+            <p className="text-sm text-brand-silver/80 leading-relaxed font-sans">
+              Quiet tech luxury. Premium smartphones, tablets, MacBooks and authentic accessories with direct WhatsApp concierge for Nigerian tech enthusiasts.
             </p>
-            <div className="space-y-2 text-sm text-neutral-400">
+            <div className="space-y-2 text-sm text-brand-silver/80">
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-brand-blue shrink-0" aria-hidden="true" />
+                <MapPin className="h-4 w-4 text-brand-champagne shrink-0" aria-hidden="true" />
                 <span>Ondo State, Nigeria</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-brand-blue shrink-0" aria-hidden="true" />
+                <Clock className="h-4 w-4 text-brand-champagne shrink-0" aria-hidden="true" />
                 <span>Open 24/7</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-brand-blue shrink-0" aria-hidden="true" />
+                <Phone className="h-4 w-4 text-brand-champagne shrink-0" aria-hidden="true" />
                 <span>WhatsApp: +234 807 082 2409</span>
               </div>
             </div>
@@ -78,30 +83,30 @@ export function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-xs font-editorial uppercase tracking-editorial text-brand-champagne mb-4">Quick Links</h4>
+            <ul className="space-y-2.5 text-sm font-sans">
               <li>
-                <Link href="/shop" className="hover:text-brand-blue transition-colors">
+                <Link href="/shop" className="hover:text-brand-champagne transition-colors">
                   All Gadgets
                 </Link>
               </li>
               <li>
-                <Link href="/how-to-order" className="hover:text-brand-blue transition-colors">
+                <Link href="/how-to-order" className="hover:text-brand-champagne transition-colors">
                   How to Order
                 </Link>
               </li>
               <li>
-                <Link href="/deals" className="hover:text-brand-blue transition-colors">
+                <Link href="/deals" className="hover:text-brand-champagne transition-colors">
                   Special Deals
                 </Link>
               </li>
               <li>
-                <Link href="/track" className="hover:text-brand-blue transition-colors">
+                <Link href="/track" className="hover:text-brand-champagne transition-colors">
                   Track Your Order
                 </Link>
               </li>
               <li>
-                <Link href="/wishlist" className="hover:text-brand-blue transition-colors">
+                <Link href="/wishlist" className="hover:text-brand-champagne transition-colors">
                   Saved Items
                 </Link>
               </li>
@@ -110,25 +115,25 @@ export function Footer() {
 
           {/* Customer policies */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Store Policies</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-xs font-editorial uppercase tracking-editorial text-brand-champagne mb-4">Store Policies</h4>
+            <ul className="space-y-2.5 text-sm font-sans">
               <li>
-                <Link href="/delivery" className="hover:text-brand-blue transition-colors">
+                <Link href="/delivery" className="hover:text-brand-champagne transition-colors">
                   Delivery & Pickup
                 </Link>
               </li>
               <li>
-                <Link href="/warranty" className="hover:text-brand-blue transition-colors">
+                <Link href="/warranty" className="hover:text-brand-champagne transition-colors">
                   Warranty & Returns
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-brand-blue transition-colors">
+                <Link href="/privacy" className="hover:text-brand-champagne transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-brand-blue transition-colors">
+                <Link href="/terms" className="hover:text-brand-champagne transition-colors">
                   Terms of Service
                 </Link>
               </li>
@@ -137,41 +142,41 @@ export function Footer() {
 
           {/* Trust & Support */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-0 uppercase tracking-wider mb-4">Trust & Support</h4>
-            <ul className="space-y-2 text-sm mb-4">
+            <h4 className="text-xs font-editorial uppercase tracking-editorial text-brand-champagne mb-4">Trust & Verification</h4>
+            <ul className="space-y-2.5 text-sm font-sans mb-4">
               <li>
-                <Link href="/verify-accounts" className="text-brand-whatsapp hover:underline font-semibold flex items-center gap-1">
-                  <span>Verify Our Accounts</span>
+                <Link href="/verify-accounts" className="text-brand-whatsapp hover:underline font-semibold flex items-center gap-1.5">
+                  <span>Verify Our Official Accounts</span>
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-brand-blue transition-colors">
+                <Link href="/about" className="hover:text-brand-champagne transition-colors">
                   About Keraunous
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-brand-blue transition-colors">
-                  Contact & Location
+                <Link href="/contact" className="hover:text-brand-champagne transition-colors">
+                  Contact & Concierge
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-brand-blue transition-colors">
+                <Link href="/faq" className="hover:text-brand-champagne transition-colors">
                   FAQ & Inquiries
                 </Link>
               </li>
             </ul>
-            <div className="rounded-card-sm bg-neutral-900/80 p-3 border border-neutral-800">
-              <p className="text-xs font-semibold text-neutral-200">Anti-Scam Protection</p>
-              <p className="text-xs text-neutral-400 mt-1">
-                We accept bank transfers strictly to our official OPay account (8070822409).
+            <div className="rounded-card-sm bg-brand-charcoal/95 p-3.5 border border-brand-champagne/30 shadow-foil">
+              <p className="text-xs font-display font-semibold text-brand-champagne">Anti-Impersonation Protection</p>
+              <p className="text-xs text-brand-silver/80 mt-1 leading-relaxed">
+                We accept bank transfers strictly to our verified OPay account (8070822409).
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+        <div className="mt-12 pt-8 border-t border-brand-silver/20 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-silver/60 gap-4">
           <p>© {new Date().getFullYear()} Keraunous Tech Store. All rights reserved.</p>
-          <p>Prices in Nigerian Naira (₦). Built for trust and speed.</p>
+          <p className="tracking-wide">Prices in Nigerian Naira (₦). Quiet Tech Luxury.</p>
         </div>
       </div>
     </footer>

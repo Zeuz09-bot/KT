@@ -11,6 +11,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLDivElement>
   subtitle?: string;
   viewAllHref?: string;
   viewAllLabel?: string;
+  editorial?: boolean;
 }
 
 export function SectionHeader({
@@ -18,22 +19,30 @@ export function SectionHeader({
   subtitle,
   viewAllHref,
   viewAllLabel = 'View all',
+  editorial = false,
   className,
   ...props
 }: SectionHeaderProps) {
   return (
-    <div className={cn('flex items-center justify-between', className)} {...props}>
+    <div className={cn('flex items-end justify-between border-b border-brand-silver/30 pb-4', className)} {...props}>
       <div>
-        <h2 className="text-xl font-bold text-neutral-900 sm:text-2xl">{title}</h2>
-        {subtitle && <p className="mt-1 text-xs text-neutral-500">{subtitle}</p>}
+        <h2
+          className={cn(
+            'text-xl font-bold text-brand-charcoal sm:text-2xl tracking-display',
+            editorial ? 'font-editorial uppercase tracking-editorial text-brand-navy' : 'font-display',
+          )}
+        >
+          {title}
+        </h2>
+        {subtitle && <p className="mt-1.5 text-xs text-brand-charcoal/60 tracking-wide">{subtitle}</p>}
       </div>
       {viewAllHref && (
         <Link
           href={viewAllHref}
-          className="inline-flex items-center gap-1 text-sm font-medium text-brand-blue hover:underline underline-offset-2 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-display font-medium text-brand-navy hover:text-brand-charcoal transition-colors group"
         >
-          {viewAllLabel}
-          <ArrowRight size={14} aria-hidden="true" />
+          <span>{viewAllLabel}</span>
+          <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
         </Link>
       )}
     </div>

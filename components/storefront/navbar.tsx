@@ -39,15 +39,15 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
   const effectiveWishCount = wishHydrated ? liveWishCount : wishlistCount;
 
   return (
-    <header className="sticky top-0 z-30 border-b border-neutral-200 bg-neutral-0 shadow-sm">
+    <header className="sticky top-0 z-30 border-b border-brand-silver/40 bg-brand-white/95 backdrop-blur-md shadow-card">
       {/* Top strip: WhatsApp number */}
-      <div className="hidden bg-brand-navy py-1.5 text-center text-xs font-medium text-white sm:block">
+      <div className="hidden bg-brand-navy py-1.5 text-center text-xs font-medium text-brand-white sm:block border-b border-brand-silver/20">
         <a
           href="tel:+2348070822409"
-          className="inline-flex items-center gap-1.5 hover:underline"
+          className="inline-flex items-center gap-2 hover:text-brand-champagne transition-colors tracking-wide"
         >
-          <Phone size={12} aria-hidden="true" />
-          Call / WhatsApp: <strong>0807 082 2409</strong> · Open 24/7
+          <Phone size={12} className="text-brand-champagne" aria-hidden="true" />
+          <span>Direct Concierge: <strong className="text-brand-white font-semibold">0807 082 2409</strong> · WhatsApp Available 24/7</span>
         </a>
       </div>
 
@@ -55,20 +55,22 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
       <nav aria-label="Main navigation">
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 sm:px-6">
           {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Keraunous Tech Store — Home">
-            <span className="rounded-lg bg-brand-blue px-2 py-1 text-sm font-bold text-white tracking-tight">
+          <Link href="/" className="flex shrink-0 items-center gap-2.5 group" aria-label="Keraunous Tech Store — Home">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-navy border border-brand-silver/40 text-xs font-display font-bold text-brand-white tracking-widest shadow-sm group-hover:border-brand-champagne transition-colors">
               KT
             </span>
-            <span className="hidden font-bold text-neutral-900 sm:block">Keraunous Tech</span>
+            <span className="hidden font-display font-bold text-brand-charcoal tracking-display text-base sm:block group-hover:text-brand-navy transition-colors">
+              Keraunous Tech
+            </span>
           </Link>
 
           {/* Desktop nav links */}
-          <ul className="hidden items-center gap-1 lg:flex" role="list">
+          <ul className="hidden items-center gap-1 lg:flex font-display" role="list">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="rounded-card-sm px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-brand-blue"
+                  className="rounded-card-sm px-3.5 py-2 text-sm font-medium text-brand-charcoal/80 transition-colors hover:bg-brand-cream hover:text-brand-navy focus-visible:outline-2 focus-visible:outline-brand-navy"
                 >
                   {link.label}
                 </Link>
@@ -82,13 +84,13 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
           </div>
 
           {/* Actions */}
-          <div className="ml-auto flex items-center gap-1">
+          <div className="ml-auto flex items-center gap-1.5">
 
             {/* Wishlist */}
             <Link
               href="/wishlist"
               aria-label={`Wishlist${effectiveWishCount > 0 ? ` (${effectiveWishCount} items)` : ''}`}
-              className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-neutral-600 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-blue"
+              className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-brand-charcoal/80 hover:bg-brand-cream hover:text-brand-navy focus-visible:outline-2 focus-visible:outline-brand-navy transition-colors"
             >
               <Heart size={20} aria-hidden="true" />
               {effectiveWishCount > 0 && (
@@ -102,11 +104,11 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
             <Link
               href="/order-list"
               aria-label={`Order List${effectiveOrderCount > 0 ? ` (${effectiveOrderCount} items)` : ''}`}
-              className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-neutral-600 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-blue"
+              className="relative flex h-10 w-10 items-center justify-center rounded-card-sm text-brand-charcoal/80 hover:bg-brand-cream hover:text-brand-navy focus-visible:outline-2 focus-visible:outline-brand-navy transition-colors"
             >
               <ClipboardList size={20} aria-hidden="true" />
               {effectiveOrderCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-blue text-[10px] font-bold text-white">
+                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-navy text-[10px] font-bold text-white border border-brand-silver/50">
                   {effectiveOrderCount > 9 ? '9+' : effectiveOrderCount}
                 </span>
               )}
@@ -128,30 +130,30 @@ export function Navbar({ orderListCount = 0, wishlistCount = 0 }: NavbarProps) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div id="mobile-nav" className="border-t border-neutral-200 bg-neutral-0 lg:hidden">
+          <div id="mobile-nav" className="border-t border-brand-silver/30 bg-brand-white lg:hidden">
             {/* Search — mobile */}
-            <div className="px-4 py-3">
+            <div className="px-4 py-3 bg-brand-cream/40">
               <SearchBar />
             </div>
-            <ul className="flex flex-col py-1" role="list">
+            <ul className="flex flex-col py-1 font-display" role="list">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block px-6 py-3 text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
+                    className="block px-6 py-3 text-sm font-medium text-brand-charcoal/80 hover:bg-brand-cream hover:text-brand-navy transition-colors"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
-              <li className="border-t border-neutral-200 mt-1 pt-2 px-6 py-3">
+              <li className="border-t border-brand-silver/20 mt-1 pt-2 px-6 py-3">
                 <a
                   href="tel:+2348070822409"
-                  className="flex items-center gap-2 text-sm font-medium text-neutral-700"
+                  className="flex items-center gap-2 text-sm font-medium text-brand-charcoal hover:text-brand-navy"
                 >
-                  <Phone size={14} aria-hidden="true" />
-                  0807 082 2409 · 24/7
+                  <Phone size={14} className="text-brand-champagne" aria-hidden="true" />
+                  0807 082 2409 · WhatsApp 24/7
                 </a>
               </li>
             </ul>

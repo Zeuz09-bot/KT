@@ -38,14 +38,19 @@ export async function getHomeData(supabase: SupabaseClient<Database>) {
     trustBarRes,
   ] = await Promise.all([
     // Active hero banners
-    supabase
-      .from('banners')
-      .select('*')
-      .eq('type', 'hero')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true })
-      .then((res) => res.data ?? [])
-      .catch(() => []),
+    (async () => {
+      try {
+        const res = await supabase
+          .from('banners')
+          .select('*')
+          .eq('type', 'hero')
+          .eq('is_active', true)
+          .order('sort_order', { ascending: true });
+        return res.data ?? [];
+      } catch {
+        return [];
+      }
+    })(),
 
     // Featured products (up to 4)
     listProductCards(supabase, { isFeatured: true, limit: 4 }).catch(() => []),
@@ -60,29 +65,37 @@ export async function getHomeData(supabase: SupabaseClient<Database>) {
     listBrands(supabase).catch(() => []),
 
     // Active flash sale campaign
-    supabase
-      .from('campaigns')
-      .select('*')
-      .eq('is_active', true)
-      .gt('ends_at', new Date().toISOString())
-      .maybeSingle()
-      .then((res) => res.data ?? null)
-      .catch(() => null),
+    (async () => {
+      try {
+        const res = await supabase
+          .from('campaigns')
+          .select('*')
+          .eq('is_active', true)
+          .gt('ends_at', new Date().toISOString())
+          .maybeSingle();
+        return res.data ?? null;
+      } catch {
+        return null;
+      }
+    })(),
 
     // Trust bar from site_settings (key = 'trust_bar')
-    supabase
-      .from('site_settings')
-      .select('value')
-      .eq('key', 'trust_bar')
-      .maybeSingle()
-      .then((res) => {
+    (async () => {
+      try {
+        const res = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('key', 'trust_bar')
+          .maybeSingle();
         const val = res.data?.value;
         if (Array.isArray(val) && val.length > 0) {
           return val as unknown as TrustBarItem[];
         }
         return DEFAULT_TRUST_BAR;
-      })
-      .catch(() => DEFAULT_TRUST_BAR),
+      } catch {
+        return DEFAULT_TRUST_BAR;
+      }
+    })(),
   ]);
 
   const popularSmartphones = popularProducts.slice(0, 4);

@@ -58,26 +58,26 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        'group relative flex flex-col rounded-card-md border border-neutral-200 bg-neutral-0 overflow-hidden',
-        'transition-shadow duration-200 hover:shadow-card-hover',
+        'group relative flex flex-col rounded-card-md border border-brand-silver/50 bg-brand-white overflow-hidden',
+        'transition-all duration-300 hover:shadow-card-hover hover:border-brand-navy/30',
         className,
       )}
     >
-      {/* Image */}
-      <Link href={`/product/${slug}`} className="relative block aspect-square overflow-hidden bg-neutral-50">
+      {/* Image with boutique breathing room */}
+      <Link href={`/product/${slug}`} className="relative block aspect-square overflow-hidden bg-brand-cream/40 p-4">
         <Image
           src={imageUrl}
           alt={imageAlt}
           fill
           className={cn(
-            'object-cover transition-transform duration-300 group-hover:scale-105',
-            isSoldOut && 'opacity-60',
+            'object-contain p-3 transition-transform duration-500 group-hover:scale-105',
+            isSoldOut && 'opacity-50 grayscale',
           )}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
         {/* Badges */}
-        <div className="absolute left-2 top-2 flex flex-col gap-1">
+        <div className="absolute left-2.5 top-2.5 flex flex-col gap-1.5 z-10">
           {badge === 'new' && <Badge variant="new">New</Badge>}
           {badge === 'bestseller' && <Badge variant="bestseller">Best Seller</Badge>}
           {oldPriceNgn && oldPriceNgn > priceNgn && (
@@ -102,33 +102,33 @@ export function ProductCard({
             }
           }}
           className={cn(
-            'absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-0/80 backdrop-blur-sm',
-            'transition-colors hover:bg-neutral-0 focus-visible:outline-2 focus-visible:outline-brand-blue',
+            'absolute right-2.5 top-2.5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-brand-white/90 backdrop-blur-sm border border-brand-silver/40 shadow-sm',
+            'transition-colors hover:bg-brand-white focus-visible:outline-2 focus-visible:outline-brand-navy',
           )}
         >
           <Heart
-            size={18}
+            size={17}
             aria-hidden="true"
             className={cn(
               'transition-colors',
-              isSaved ? 'fill-brand-danger text-brand-danger' : 'text-neutral-400',
+              isSaved ? 'fill-brand-danger text-brand-danger' : 'text-brand-charcoal/40 group-hover:text-brand-charcoal/70',
             )}
           />
         </button>
       </Link>
 
       {/* Details */}
-      <div className="flex flex-1 flex-col gap-2 p-3">
+      <div className="flex flex-1 flex-col gap-2 p-3.5 bg-brand-white">
         <Link
           href={`/product/${slug}`}
-          className="text-sm font-semibold text-neutral-900 line-clamp-2 hover:text-brand-blue transition-colors"
+          className="text-sm font-display font-medium text-brand-charcoal line-clamp-2 hover:text-brand-navy transition-colors tracking-display"
         >
           {name}
         </Link>
 
         <PriceTag currentNgn={priceNgn} oldNgn={oldPriceNgn} size="sm" />
 
-        <div className="flex items-center justify-between gap-2 mt-auto pt-2">
+        <div className="flex items-center justify-between gap-2 mt-auto pt-2.5 border-t border-brand-silver/20">
           <StockBadge stock={stock} />
 
           {!isSoldOut && whatsappUrl && (
@@ -138,8 +138,8 @@ export function ProductCard({
               rel="noopener noreferrer"
               aria-label={`Order ${name} on WhatsApp`}
               className={cn(
-                'inline-flex min-h-[36px] items-center justify-center rounded-card-sm bg-brand-whatsapp px-3 text-xs font-semibold text-neutral-900',
-                'transition-colors hover:bg-brand-whatsappDark focus-visible:outline-2 focus-visible:outline-brand-blue',
+                'inline-flex min-h-[36px] items-center justify-center rounded-card-sm bg-brand-whatsapp px-3.5 text-xs font-semibold text-brand-charcoal shadow-sm',
+                'transition-all hover:bg-brand-whatsappDark focus-visible:outline-2 focus-visible:outline-brand-navy',
               )}
             >
               Order

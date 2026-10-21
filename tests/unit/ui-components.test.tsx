@@ -46,6 +46,12 @@ describe('Button Component', () => {
     const btn = screen.getByRole('button', { name: /order on whatsapp/i });
     expect(btn.className).toContain('bg-brand-whatsapp');
   });
+
+  it('renders editorial variant with Champagne Foil accent styling', () => {
+    render(<Button variant="editorial">Excellence</Button>);
+    const btn = screen.getByRole('button', { name: /excellence/i });
+    expect(btn.className).toContain('bg-brand-champagne/15');
+  });
 });
 
 describe('StockBadge Component', () => {
@@ -74,6 +80,12 @@ describe('Badge Component', () => {
 
     render(<Badge variant="bestseller" />);
     expect(screen.getByText('Best Seller')).toBeInTheDocument();
+
+    render(<Badge variant="champagne" />);
+    expect(screen.getByText('Prestige')).toBeInTheDocument();
+
+    render(<Badge variant="silver" />);
+    expect(screen.getByText('Certified')).toBeInTheDocument();
   });
 });
 

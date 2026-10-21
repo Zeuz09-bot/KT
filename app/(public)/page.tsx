@@ -23,7 +23,7 @@ export default async function HomePage() {
   const homeData = await getHomeData(supabase);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-brand-cream text-brand-charcoal selection:bg-brand-navy selection:text-brand-white">
       <AnnouncementBar />
       <Navbar />
       <main>
@@ -31,35 +31,49 @@ export default async function HomePage() {
         {homeData.banners.length > 0 ? (
           <HeroCarousel banners={homeData.banners} />
         ) : (
-          <div className="h-[400px] bg-muted flex items-center justify-center">
-            <p className="text-muted-foreground">No active banners</p>
+          <div className="h-[420px] bg-brand-charcoal flex flex-col items-center justify-center text-center p-6 border-b border-brand-silver/20">
+            <span className="text-xs font-editorial uppercase tracking-editorial text-brand-champagne mb-2">Excellence & Authenticity</span>
+            <h1 className="text-3xl md:text-5xl font-display font-bold text-brand-white tracking-display">Keraunous Tech Store</h1>
+            <p className="mt-2 text-sm text-brand-silver/80 max-w-md">Nigeria&apos;s premier quiet tech luxury showcase. Verified genuine gadgets with WhatsApp concierge.</p>
           </div>
         )}
 
         {/* Trust Bar */}
         {homeData.trustBar && <TrustBar items={homeData.trustBar} />}
 
-        {/* Popular Smartphones */}
-        <section className="container mx-auto px-4 py-12">
+        {/* Popular Smartphones — 30-40% Breathing Room */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <SectionHeader
             title="Popular Smartphones"
-            subtitle="Best-selling devices from top brands"
+            subtitle="Curated, hand-tested devices from Apple, Samsung, and Google"
             viewAllHref="/shop"
-            viewAllLabel="View All"
+            viewAllLabel="Explore Collection"
           />
-          <Suspense fallback={<ProductGridSkeleton />}>
-            <ProductGrid products={homeData.popularSmartphones} />
-          </Suspense>
+          <div className="mt-8">
+            <Suspense fallback={<ProductGridSkeleton />}>
+              <ProductGrid products={homeData.popularSmartphones} />
+            </Suspense>
+          </div>
         </section>
 
-        {/* Limited Time Offer / Flash Sale */}
+        {/* Limited Time Offer / Flash Sale — 30% Grounding Tone with Champagne Foil */}
         {homeData.campaign && (
-          <section className="bg-primary/5 py-12">
-            <div className="container mx-auto px-4">
-              <SectionHeader
-                title={homeData.campaign.title}
-                subtitle={homeData.campaign.subtitle}
-              />
+          <section className="bg-brand-navy text-brand-white py-16 md:py-20 border-y border-brand-silver/30 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(#D4D8DD_1px,transparent_1px)] [background-size:28px_28px] opacity-10 pointer-events-none" />
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-silver/30 pb-4 mb-8">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-brand-champagne/20 border border-brand-champagne/40 px-3 py-0.5 text-xs font-editorial uppercase tracking-editorial text-brand-champagne mb-2">
+                    Exclusive Campaign
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-display font-bold text-brand-white tracking-display">
+                    {homeData.campaign.title}
+                  </h2>
+                  {homeData.campaign.subtitle && (
+                    <p className="mt-1 text-sm text-brand-silver/80">{homeData.campaign.subtitle}</p>
+                  )}
+                </div>
+              </div>
               <Suspense fallback={<ProductGridSkeleton />}>
                 <ProductGrid products={homeData.bestDeals} showSaleBadge />
               </Suspense>
@@ -68,34 +82,45 @@ export default async function HomePage() {
         )}
 
         {/* Shop by Brand */}
-        <section className="container mx-auto px-4 py-12">
-          <SectionHeader title="Shop by Brand" />
-          <BrandTiles brands={homeData.brands} />
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+          <SectionHeader
+            title="Curated Brands"
+            subtitle="Authorised hardware & verified flagship collections"
+            editorial
+          />
+          <div className="mt-8">
+            <BrandTiles brands={homeData.brands} />
+          </div>
         </section>
 
         {/* Best Deals */}
-        <section className="container mx-auto px-4 py-12">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <SectionHeader
-            title="Best Deals"
-            subtitle="Great prices on selected items"
+            title="Refined Values"
+            subtitle="Exceptional price-to-performance on open-box and mint condition devices"
             viewAllHref="/deals"
             viewAllLabel="View All Deals"
           />
-          <Suspense fallback={<ProductGridSkeleton />}>
-            <ProductGrid products={homeData.bestDeals} showSaleBadge />
-          </Suspense>
+          <div className="mt-8">
+            <Suspense fallback={<ProductGridSkeleton />}>
+              <ProductGrid products={homeData.bestDeals} showSaleBadge />
+            </Suspense>
+          </div>
         </section>
 
         {/* Featured Products */}
-        <section className="container mx-auto px-4 py-12">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <SectionHeader
-            title="Featured Products"
+            title="Featured Gadgets"
+            subtitle="Flagship MacBooks, iPads, and audio gear"
             viewAllHref="/best-sellers"
-            viewAllLabel="View All"
+            viewAllLabel="Explore All"
           />
-          <Suspense fallback={<ProductGridSkeleton />}>
-            <ProductGrid products={homeData.featuredProducts} />
-          </Suspense>
+          <div className="mt-8">
+            <Suspense fallback={<ProductGridSkeleton />}>
+              <ProductGrid products={homeData.featuredProducts} />
+            </Suspense>
+          </div>
         </section>
       </main>
 
