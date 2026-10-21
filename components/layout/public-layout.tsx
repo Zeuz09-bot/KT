@@ -6,6 +6,7 @@ import { AnnouncementBar } from '@/components/storefront/announcement-bar';
 import { Navbar, NavbarProps } from '@/components/storefront/navbar';
 import { Footer } from '@/components/storefront/footer';
 import { FloatingWhatsAppButton } from '@/components/storefront/floating-whatsapp-button';
+import { WelcomePopup } from '@/components/storefront/welcome-popup';
 import { Toaster } from '@/components/ui/toast';
 
 export interface PublicLayoutProps extends NavbarProps {
@@ -42,6 +43,7 @@ export function PublicLayout({
 
       <Footer />
       {showFloatingWhatsApp && <FloatingWhatsAppButton />}
+      <WelcomePopup />
       <Toaster />
     </div>
   );
