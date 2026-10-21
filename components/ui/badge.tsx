@@ -13,26 +13,32 @@ export type BadgeVariant =
   | 'soldout'
   | 'generic'
   | 'info'
-  | 'success';
+  | 'success'
+  | 'champagne'
+  | 'silver';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  new: 'bg-brand-blue text-white',
-  bestseller: 'bg-brand-navy text-white',
-  discount: 'bg-brand-danger text-white',
-  lowstock: 'bg-brand-warning text-neutral-900',
-  soldout: 'bg-neutral-400 text-white',
-  generic: 'bg-neutral-100 text-neutral-800 border border-neutral-200',
-  info: 'bg-brand-blueLight text-brand-blue',
-  success: 'bg-brand-successLight text-brand-success',
+  new: 'bg-brand-navy text-brand-white border border-brand-silver/30 font-display tracking-display',
+  bestseller: 'bg-brand-charcoal text-brand-white border border-brand-silver/30 font-display tracking-display',
+  champagne: 'bg-brand-champagne/20 text-brand-charcoal border border-brand-champagne/40 font-medium',
+  silver: 'bg-brand-silver/30 text-brand-navy border border-brand-silver/60 font-medium',
+  discount: 'bg-brand-danger text-white font-medium',
+  lowstock: 'bg-brand-warningLight text-neutral-900 border border-brand-warning/30 font-medium',
+  soldout: 'bg-neutral-400 text-white font-medium',
+  generic: 'bg-brand-cream text-brand-charcoal border border-brand-silver/40 font-medium',
+  info: 'bg-brand-cream text-brand-navy border border-brand-silver/30 font-medium',
+  success: 'bg-brand-successLight text-brand-success border border-brand-success/30 font-medium',
 };
 
 const defaultLabels: Partial<Record<BadgeVariant, string>> = {
   new: 'New',
   bestseller: 'Best Seller',
+  champagne: 'Prestige',
+  silver: 'Certified',
   discount: 'Sale',
   lowstock: 'Low Stock',
   soldout: 'Sold Out',

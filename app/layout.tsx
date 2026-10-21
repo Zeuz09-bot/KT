@@ -1,7 +1,29 @@
 import type { Metadata } from 'next';
+import { Inter, Plus_Jakarta_Sans, Cinzel } from 'next/font/google';
 import './globals.css';
 import { buildLocalBusinessJsonLd } from '@/lib/seo/json-ld';
 import { UtmTracker } from '@/components/storefront/utm-tracker';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-jakarta',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-cinzel',
+  weight: ['400', '500', '600', '700'],
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://keraunous.ng';
 
@@ -52,6 +74,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/logo.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -69,7 +98,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+      <body className={`${inter.variable} ${jakarta.variable} ${cinzel.variable} min-h-screen bg-brand-cream text-brand-charcoal font-sans antialiased`}>
         <UtmTracker />
         {children}
       </body>

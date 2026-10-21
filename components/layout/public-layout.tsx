@@ -6,6 +6,7 @@ import { AnnouncementBar } from '@/components/storefront/announcement-bar';
 import { Navbar, NavbarProps } from '@/components/storefront/navbar';
 import { Footer } from '@/components/storefront/footer';
 import { FloatingWhatsAppButton } from '@/components/storefront/floating-whatsapp-button';
+import { WelcomePopup } from '@/components/storefront/welcome-popup';
 import { Toaster } from '@/components/ui/toast';
 
 export interface PublicLayoutProps extends NavbarProps {
@@ -24,7 +25,7 @@ export function PublicLayout({
   showFloatingWhatsApp = true,
 }: PublicLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900 font-sans antialiased">
+    <div className="flex min-h-screen flex-col bg-brand-cream text-brand-charcoal font-sans antialiased">
       {/* Skip to main content link for screen readers */}
       <a
         href="#main-content"
@@ -42,6 +43,7 @@ export function PublicLayout({
 
       <Footer />
       {showFloatingWhatsApp && <FloatingWhatsAppButton />}
+      <WelcomePopup />
       <Toaster />
     </div>
   );

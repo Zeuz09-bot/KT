@@ -18,6 +18,7 @@ import type {
 export type BannerRow = Database['public']['Tables']['banners']['Row'];
 export type CampaignRow = Database['public']['Tables']['campaigns']['Row'];
 export type SiteSettingRow = Database['public']['Tables']['site_settings']['Row'];
+export type { TrustBarItem };
 
 export const DEFAULT_TRUST_BAR: TrustBarItem[] = [
   { icon: 'shield', title: 'Genuine Products', subtitle: 'Every item verified authentic' },

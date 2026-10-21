@@ -17,14 +17,24 @@ const config: Config = {
     },
     extend: {
       colors: {
-        /* ── Brand palette ───────────────────────────────── */
+        /* ── Quiet Tech Luxury Brand Palette ──────────────── */
         brand: {
-          blue: '#1F5CFF',
-          blueDark: '#1649CC',
-          blueLight: '#EBF0FF',
-          navy: '#0A1240',
-          navyDark: '#0B1437',
-          surface: '#F5F7FF',
+          navy: '#3B4854', // Hero Brand Color (Slate Navy)
+          charcoal: '#18191B', // Device & Core Box (Obsidian Charcoal)
+          cream: '#F3EFEA', // Environment & Web Base (Limestone Cream)
+          canvas: '#F3EFEA', // Web canvas alias
+          silver: '#D4D8DD', // Metallic Accent (Brushed Silver / Chrome)
+          champagne: '#C5B49C', // Editorial Accent (Champagne Foil)
+          white: '#FFFFFF', // Pure White (Contrast Negative Space)
+
+          /* Storefront Aliases & Overrides */
+          blue: '#3B4854', // Hero Slate Navy
+          blueDark: '#2F3A44',
+          blueLight: '#E8ECF0',
+          navyDark: '#18191B', // Obsidian Charcoal
+          surface: '#F3EFEA', // Limestone Cream
+
+          /* Essential Functional Status */
           whatsapp: '#25D366',
           whatsappDark: '#1DA851',
           danger: '#E5484D',
@@ -34,23 +44,30 @@ const config: Config = {
           warning: '#F59E0B',
           warningLight: '#FFFBEB',
         },
-        /* ── Neutral scale ───────────────────────────────── */
+        /* ── Quiet Luxury Neutral Scale ───────────────────── */
         neutral: {
           0: '#FFFFFF',
-          50: '#F8F9FA',
-          100: '#F1F3F5',
-          200: '#E9ECEF',
-          300: '#DEE2E6',
-          400: '#CED4DA',
-          500: '#ADB5BD',
-          600: '#6C757D',
-          700: '#495057',
-          800: '#343A40',
-          900: '#212529',
+          50: '#FBF9F7',
+          100: '#F3EFEA', // Limestone Cream
+          200: '#E6E1DA',
+          300: '#D4D8DD', // Brushed Silver
+          400: '#A9AFB7',
+          500: '#7E8690',
+          600: '#5A636D',
+          700: '#3B4854', // Slate Navy
+          800: '#272B2E',
+          900: '#18191B', // Obsidian Charcoal
         },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-jakarta)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
+        editorial: ['var(--font-cinzel)', 'Georgia', 'serif'],
+      },
+      letterSpacing: {
+        display: '0.025em',
+        editorial: '0.18em',
+        'editorial-wide': '0.22em',
       },
       borderRadius: {
         'card-sm': '12px',
@@ -58,9 +75,11 @@ const config: Config = {
         'card-lg': '24px',
       },
       boxShadow: {
-        card: '0 1px 3px 0 rgba(0,0,0,0.08), 0 1px 2px -1px rgba(0,0,0,0.06)',
-        'card-hover': '0 4px 16px 0 rgba(31,92,255,0.12)',
-        modal: '0 20px 60px 0 rgba(0,0,0,0.18)',
+        card: '0 1px 3px 0 rgba(24,25,27,0.06), 0 1px 2px -1px rgba(24,25,27,0.04)',
+        'card-hover': '0 8px 24px -4px rgba(59,72,84,0.12), 0 2px 6px -1px rgba(24,25,27,0.06)',
+        modal: '0 24px 64px 0 rgba(24,25,27,0.22)',
+        metallic: '0 0 0 1px rgba(212,216,221,0.6), 0 4px 12px rgba(24,25,27,0.04)',
+        foil: '0 0 0 1px rgba(197,180,156,0.4), 0 4px 14px rgba(197,180,156,0.15)',
       },
       keyframes: {
         'fade-in': {

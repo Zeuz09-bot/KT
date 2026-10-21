@@ -10,7 +10,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'whatsapp' | 'icon';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'whatsapp' | 'icon' | 'editorial';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -24,14 +24,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-blue text-white hover:bg-brand-blueDark active:bg-brand-blueDark shadow-sm',
+    'bg-brand-navy text-brand-white border border-brand-silver/20 hover:bg-brand-charcoal active:bg-brand-charcoal shadow-card',
   secondary:
-    'bg-neutral-100 text-neutral-900 border border-neutral-300 hover:bg-neutral-200 active:bg-neutral-200',
+    'bg-brand-white text-brand-charcoal border border-brand-silver/60 hover:bg-brand-cream active:bg-brand-silver/30 shadow-sm',
   ghost:
-    'bg-transparent text-brand-blue hover:bg-brand-blueLight active:bg-brand-blueLight',
+    'bg-transparent text-brand-navy hover:bg-brand-cream active:bg-brand-cream/80',
   whatsapp:
-    'bg-brand-whatsapp text-neutral-900 hover:bg-brand-whatsappDark active:bg-brand-whatsappDark font-semibold',
-  icon: 'bg-transparent text-neutral-700 hover:bg-neutral-100 active:bg-neutral-100 p-0',
+    'bg-brand-whatsapp text-brand-charcoal hover:bg-brand-whatsappDark active:bg-brand-whatsappDark font-semibold shadow-sm',
+  editorial:
+    'bg-brand-champagne/15 text-brand-charcoal border border-brand-champagne/50 hover:bg-brand-champagne/25 active:bg-brand-champagne/30 font-display tracking-display',
+  icon: 'bg-transparent text-brand-charcoal/80 hover:bg-brand-cream active:bg-brand-silver/20 p-0',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

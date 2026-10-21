@@ -55,6 +55,8 @@ import { ImageUploader, UploadedImage } from '@/components/admin/image-uploader'
 import { DataTable, Column } from '@/components/admin/data-table';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { ShieldCheck, Truck, Clock, RefreshCw, ShoppingBag, Eye } from 'lucide-react';
+import { KeraunosLogo } from '@/components/ui/keraunos-logo';
+import { BrandLogoRenderer } from '@/components/ui/brand-icons';
 
 interface AdminDemoProduct {
   id: string;
@@ -111,25 +113,197 @@ function DevUiShowcase() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 space-y-16">
       {/* Header */}
-      <div className="border-b border-neutral-200 pb-6">
-        <h1 className="text-3xl font-black text-neutral-900 tracking-tight">
+      <div className="border-b border-brand-silver/30 pb-6">
+        <div className="inline-flex items-center gap-2 rounded-full bg-brand-champagne/20 border border-brand-champagne/40 px-3 py-0.5 text-xs font-editorial uppercase tracking-editorial text-brand-charcoal mb-2">
+          Quiet Tech Luxury
+        </div>
+        <h1 className="text-3xl font-display font-bold text-brand-charcoal tracking-display">
           Keraunous Design System Showcase
         </h1>
-        <p className="mt-2 text-sm text-neutral-600">
-          Component kitchen sink testing tokens, variants, states, accessibility, and responsive rendering at 360px and 1280px.
+        <p className="mt-2 text-sm text-brand-charcoal/70 max-w-2xl">
+          Complete living design system testing Quiet Tech Luxury tokens, Cinzel & Plus Jakarta Sans typography, 60–30–10 composition, accessibility, and responsive rendering.
         </p>
       </div>
+
+      {/* 0. Brand Identity & Color Palette */}
+      <section className="space-y-6" aria-labelledby="sec-palette">
+        <SectionHeader
+          id="sec-palette"
+          title="0. Quiet Tech Luxury Palette & 60-30-10 Composition"
+          subtitle="Precision color system for packaging, tactile unboxing, and digital showcase."
+          editorial
+        />
+
+        {/* 6 Swatches */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="rounded-card-md p-4 bg-[#3B4854] text-white shadow-card border border-brand-silver/20 flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-silver/80">Hero Brand</span>
+              <p className="font-display font-bold text-sm mt-0.5">Slate Navy</p>
+            </div>
+            <code className="text-xs font-mono bg-black/20 px-1.5 py-0.5 rounded w-fit">#3B4854</code>
+          </div>
+
+          <div className="rounded-card-md p-4 bg-[#18191B] text-white shadow-card border border-white/10 flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-silver/80">Core Box & Body</span>
+              <p className="font-display font-bold text-sm mt-0.5">Obsidian Charcoal</p>
+            </div>
+            <code className="text-xs font-mono bg-white/15 px-1.5 py-0.5 rounded w-fit">#18191B</code>
+          </div>
+
+          <div className="rounded-card-md p-4 bg-[#F3EFEA] text-brand-charcoal shadow-sm border border-brand-silver/60 flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-charcoal/60">Web Base 60%</span>
+              <p className="font-display font-bold text-sm mt-0.5">Limestone Cream</p>
+            </div>
+            <code className="text-xs font-mono bg-brand-charcoal/10 px-1.5 py-0.5 rounded w-fit">#F3EFEA</code>
+          </div>
+
+          <div className="rounded-card-md p-4 bg-[#D4D8DD] text-brand-charcoal shadow-sm border border-brand-silver flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-charcoal/60">Metallic Accent</span>
+              <p className="font-display font-bold text-sm mt-0.5">Brushed Silver</p>
+            </div>
+            <code className="text-xs font-mono bg-brand-charcoal/10 px-1.5 py-0.5 rounded w-fit">#D4D8DD</code>
+          </div>
+
+          <div className="rounded-card-md p-4 bg-[#C5B49C] text-brand-charcoal shadow-sm border border-[#B3A086] flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-charcoal/80">Editorial Accent</span>
+              <p className="font-display font-bold text-sm mt-0.5">Champagne Foil</p>
+            </div>
+            <code className="text-xs font-mono bg-brand-charcoal/15 px-1.5 py-0.5 rounded w-fit">#C5B49C</code>
+          </div>
+
+          <div className="rounded-card-md p-4 bg-[#FFFFFF] text-brand-charcoal shadow-sm border border-brand-silver/50 flex flex-col justify-between h-32">
+            <div>
+              <span className="text-[10px] uppercase font-editorial tracking-wider text-brand-charcoal/60">Negative Space</span>
+              <p className="font-display font-bold text-sm mt-0.5">Pure White</p>
+            </div>
+            <code className="text-xs font-mono bg-brand-charcoal/10 px-1.5 py-0.5 rounded w-fit">#FFFFFF</code>
+          </div>
+        </div>
+
+        {/* 60-30-10 Bar */}
+        <div className="space-y-2 pt-2">
+          <div className="flex items-center justify-between text-xs font-display text-brand-charcoal/80">
+            <span>The 60–30–10 Composition Ratio</span>
+            <span className="text-brand-charcoal/60">60% Canvas · 30% Structure · 10% Metallic</span>
+          </div>
+          <div className="flex h-5 w-full rounded-full overflow-hidden border border-brand-silver/50 shadow-inner">
+            <div className="w-[60%] bg-[#F3EFEA] border-r border-brand-silver/50 flex items-center justify-center text-[10px] font-bold text-brand-charcoal/70">
+              60% Limestone Cream
+            </div>
+            <div className="w-[30%] bg-[#3B4854] flex items-center justify-center text-[10px] font-bold text-white">
+              30% Slate Navy
+            </div>
+            <div className="w-[10%] bg-[#C5B49C] flex items-center justify-center text-[10px] font-bold text-brand-charcoal">
+              10%
+            </div>
+          </div>
+        </div>
+
+        {/* Typography Specimens */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+          <div className="p-5 rounded-card-md bg-brand-white border border-brand-silver/50 shadow-card">
+            <span className="text-[11px] font-mono text-brand-champagne uppercase tracking-wider block mb-2">Editorial Headline</span>
+            <p className="font-editorial text-xl font-normal text-brand-navy uppercase tracking-editorial">
+              Coming Soon
+            </p>
+            <p className="font-editorial text-sm font-normal text-brand-charcoal uppercase tracking-editorial mt-1">
+              Excellence & Precision
+            </p>
+            <p className="text-xs text-brand-charcoal/50 mt-3">Cinzel · Wide Tracking (+180)</p>
+          </div>
+
+          <div className="p-5 rounded-card-md bg-brand-white border border-brand-silver/50 shadow-card">
+            <span className="text-[11px] font-mono text-brand-navy uppercase tracking-wider block mb-2">Standard Headlines</span>
+            <p className="font-display text-xl font-bold text-brand-charcoal tracking-display">
+              iPhone 15 Pro Max
+            </p>
+            <p className="font-display text-sm font-medium text-brand-charcoal/70 tracking-display mt-1">
+              Curated Flagship Hardware
+            </p>
+            <p className="text-xs text-brand-charcoal/50 mt-3">Plus Jakarta Sans · Tracking (+25)</p>
+          </div>
+
+          <div className="p-5 rounded-card-md bg-brand-white border border-brand-silver/50 shadow-card">
+            <span className="text-[11px] font-mono text-brand-charcoal/60 uppercase tracking-wider block mb-2">Body & Technical Specs</span>
+            <p className="font-sans text-xl font-semibold text-brand-charcoal">
+              ₦1,650,000
+            </p>
+            <p className="font-sans text-sm text-brand-charcoal/80 mt-1 leading-relaxed">
+              256GB · Natural Titanium · Grade A+ Battery 100%
+            </p>
+            <p className="text-xs text-brand-charcoal/50 mt-3">Inter · Neutral & Crisp</p>
+          </div>
+        </div>
+
+        {/* Brandmark Identity Cards (01 / Primary, 02 / Signature, 03 / Luxury) */}
+        <div className="space-y-3 pt-6 border-t border-brand-silver/30">
+          <span className="text-xs font-editorial uppercase tracking-editorial text-brand-navy block">
+            Brand Identity Suite · 3 Finish Executions
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {/* 01 Primary */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#F3EFEA] border border-brand-silver/50 shadow-card">
+              <KeraunosLogo variant="primary" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-charcoal/60 mt-6">
+                01 / Primary
+              </span>
+            </div>
+
+            {/* 02 Signature */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#3B4854] border border-brand-silver/30 shadow-card">
+              <KeraunosLogo variant="signature" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-silver/70 mt-6">
+                02 / Signature
+              </span>
+            </div>
+
+            {/* 03 Luxury */}
+            <div className="flex flex-col items-center p-8 rounded-card-lg bg-[#18191B] border border-brand-champagne/40 shadow-foil">
+              <KeraunosLogo variant="luxury" layout="stacked" size="xl" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-brand-champagne/80 mt-6">
+                03 / Luxury
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Brand Icons Showcase */}
+        <div className="space-y-3 pt-6 border-t border-brand-silver/30">
+          <span className="text-xs font-editorial uppercase tracking-editorial text-brand-navy block">
+            Authorised Hardware Brand Icons
+          </span>
+          <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
+            {['Apple', 'Samsung', 'Google', 'OnePlus', 'Xiaomi', 'Infinix'].map((b) => (
+              <div
+                key={b}
+                className="flex flex-col items-center justify-center p-4 rounded-card-md bg-brand-white border border-brand-silver/50 text-brand-charcoal shadow-sm gap-2"
+              >
+                <div className="h-10 flex items-center justify-center">
+                  <BrandLogoRenderer name={b} slug={b.toLowerCase()} size={28} />
+                </div>
+                <span className="text-xs font-display font-medium text-brand-charcoal/80">{b}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* 1. Buttons */}
       <section className="space-y-4" aria-labelledby="sec-buttons">
         <SectionHeader
           id="sec-buttons"
           title="1. Buttons"
-          subtitle="Variants: primary, secondary, ghost, whatsapp, icon. States: normal, loading, disabled."
+          subtitle="Variants: primary, secondary, ghost, whatsapp, editorial, icon. States: normal, loading, disabled."
         />
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="primary">Primary</Button>
+          <Button variant="primary">Primary (Slate Navy)</Button>
           <Button variant="secondary">Secondary</Button>
+          <Button variant="editorial">Editorial (Champagne)</Button>
           <Button variant="ghost">Ghost</Button>
           <Button variant="whatsapp">Order on WhatsApp</Button>
           <Button variant="primary" isLoading>Loading</Button>
