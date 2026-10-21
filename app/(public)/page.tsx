@@ -5,15 +5,11 @@
 import { Suspense } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { getHomeData } from '@/modules/catalog';
-import { AnnouncementBar } from '@/components/storefront/announcement-bar';
-import { Navbar } from '@/components/storefront/navbar';
 import { HeroCarousel } from '@/components/storefront/hero-carousel';
 import { TrustBar } from '@/components/storefront/trust-bar';
 import { ProductGrid } from '@/components/storefront/product-grid';
 import { BrandTiles } from '@/components/storefront/brand-tiles';
 import { SectionHeader } from '@/components/ui/section-header';
-import { Footer } from '@/components/storefront/footer';
-import { FloatingWhatsAppButton } from '@/components/storefront/floating-whatsapp-button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -23,11 +19,8 @@ export default async function HomePage() {
   const homeData = await getHomeData(supabase);
 
   return (
-    <div className="min-h-screen bg-brand-cream text-brand-charcoal selection:bg-brand-navy selection:text-brand-white">
-      <AnnouncementBar />
-      <Navbar />
-      <main>
-        {/* Hero Carousel */}
+    <div className="w-full">
+      {/* Hero Carousel */}
         {homeData.banners.length > 0 ? (
           <HeroCarousel banners={homeData.banners} />
         ) : (
@@ -122,10 +115,6 @@ export default async function HomePage() {
             </Suspense>
           </div>
         </section>
-      </main>
-
-      <Footer />
-      <FloatingWhatsAppButton />
     </div>
   );
 }
